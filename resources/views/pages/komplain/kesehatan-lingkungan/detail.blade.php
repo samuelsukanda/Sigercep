@@ -58,11 +58,10 @@
 
                             {{-- Dokumentasi --}}
                             <div class="md:col-span-2">
-                                <label class="block mb-1 text-sm font-semibold text-slate-700">Dokumentasi</label>
                                 @if ($komplain->dokumentasi)
-                                    <img src="{{ asset('storage/' . $komplain->dokumentasi) }}" alt="Dokumentasi"
-                                        class="mt-2 h-24 rounded shadow-md object-cover border border-gray-200 w-1/2" />
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $komplain->dokumentasi, 'label' => 'Dokumentasi'])
                                 @else
+                                    <label class="block mb-1 text-sm font-semibold text-slate-700">Dokumentasi</label>
                                     <p class="mt-2 text-sm text-slate-600">Tidak ada dokumentasi</p>
                                 @endif
                             </div>
@@ -79,4 +78,8 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('assets/js/preview.js') }}"></script>
+    @endpush
 @endsection

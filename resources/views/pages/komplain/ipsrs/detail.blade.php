@@ -59,11 +59,10 @@
 
                             {{-- Foto --}}
                             <div class="md:col-span-2">
-                                <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Komplain</label>
                                 @if ($komplain->foto)
-                                    <img src="{{ asset('storage/' . $komplain->foto) }}" alt="Foto Komplain"
-                                        class="mt-2 h-24 rounded shadow-md object-cover border border-gray-200 w-1/2" />
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $komplain->foto, 'label' => 'Foto Komplain'])
                                 @else
+                                    <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Komplain</label>
                                     <p class="mt-2 text-sm text-slate-600">Tidak ada foto komplain</p>
                                 @endif
                             </div>
@@ -80,4 +79,8 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('assets/js/preview.js') }}"></script>
+    @endpush
 @endsection

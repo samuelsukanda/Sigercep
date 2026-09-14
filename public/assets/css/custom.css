@@ -252,12 +252,54 @@
     background: none !important;
 }
 
-/* Mobile */
+/* Mobile: Show + Search sejajar (Show compact kiri, Search isi sisa kanan) */
 @media (max-width: 640px) {
-    .datatable-custom-wrapper .dataTables_length,
+    .datatable-custom-wrapper {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding-top: 10px !important;
+    }
+    .datatable-custom-wrapper .dataTables_length {
+        order: 1 !important;
+        flex: 0 0 auto !important;
+        float: none !important;
+        width: auto !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
     .datatable-custom-wrapper .dataTables_filter {
-        text-align: left;
-        float: none;
-        width: 100%;
+        order: 2 !important;
+        flex: 1 1 0 !important;
+        float: none !important;
+        width: auto !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        text-align: right !important;
+    }
+    .datatable-custom-wrapper .dataTables_filter label {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 6px !important;
+        margin: 0 !important;
+    }
+    .datatable-custom-wrapper .dataTables_filter input {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 180px !important;
+        margin: 0 !important;
+    }
+    .datatable-custom-wrapper .dataTables_processing,
+    .datatable-custom-wrapper table.dataTable,
+    .datatable-custom-wrapper .dataTables_scroll,
+    .datatable-custom-wrapper .dataTables_info,
+    .datatable-custom-wrapper .dataTables_paginate {
+        order: 10 !important;
+        flex: 0 0 100% !important;
+        float: none !important;
+        width: 100% !important;
     }
 }
