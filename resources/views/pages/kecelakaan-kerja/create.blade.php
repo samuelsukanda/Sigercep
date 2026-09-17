@@ -77,10 +77,10 @@
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Tanda Tangan
                                         Pelapor:</label>
                                     <div class="border rounded shadow-sm bg-white p-4">
-                                        <canvas id="signature-pad" class="w-1/2 h-52 rounded"
-                                            style="border: 2px solid #9e9e9e;"></canvas>
+                                        <p class="text-sm text-gray-600 mb-2">Buat tanda tangan:</p>
+                                        <canvas id="signature-pad" class="signature-canvas"></canvas>
                                         <input type="hidden" name="tanda_tangan" id="tanda_tangan">
-                                        <div class="mt-4 flex gap-2">
+                                        <div class="mt-4 flex gap-2 flex-wrap">
                                             <button type="button" id="undo"
                                                 class="relative p-4 mb-4 mr-1 text-white border border-solid rounded-lg bg-gradient-to-tl from-zinc-800 to-zinc-700 border-slate-100 px-4 py-2 flex items-center gap-2">
                                                 <i class="fa fa-undo mr-1"></i> Undo

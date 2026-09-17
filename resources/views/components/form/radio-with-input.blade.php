@@ -3,7 +3,7 @@
 @php
     use Illuminate\Support\Str;
 
-    $isOtherSelected = !in_array($selected, array_keys($options));
+    $isOtherSelected = $selected !== null && $selected !== '' && !in_array($selected, array_keys($options));
 @endphp
 
 <div class="space-y-2">

@@ -11,7 +11,7 @@
                         <h6 class="mb-0 font-bold text-lg">Detail Kesiapan Ambulance</h6>
                     </div>
                     <div class="flex-auto p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="ambulance-detail-grid grid grid-cols-1 md:grid-cols-2 gap-4">
                             {{-- Mobil Ambulance --}}
                             <div>
                                 <label class="block mb-1 text-sm font-semibold text-slate-700">Mobil Ambulance</label>

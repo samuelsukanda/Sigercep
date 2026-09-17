@@ -30,6 +30,10 @@
                                 {{-- Perawat --}}
                                 <x-form.select name="perawat" label="Perawat" :options="config('units.perawat')" :selected="old('perawat', $ambulance->perawat ?? '')"
                                     required />
+                            </div>
+
+                            {{-- Kondisi Mobil s/d Kelistrikan/Inverter: selalu 2 kolom --}}
+                            <div class="ambulance-radio-grid">
 
                                 {{-- Kondisi Mobil --}}
                                 <x-form.radio-with-input name="kondisi_mobil" label="Kondisi Mobil" :options="[

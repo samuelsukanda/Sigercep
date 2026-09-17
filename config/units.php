@@ -248,7 +248,7 @@ return [
     ],
 
     'perawat' => [
-        'Yusuf Ifnugroho, AMK">Yusuf Ifnugroho, AMK',
+        'Yusuf Ifnugroho, AMK',
         'Nur Fitriyana Sutisna, S.Kep.,Ners',
         'Siska Roheni, A.Md.Kep',
         'Hilya Aeni, A.Md.Kep',
