@@ -61,12 +61,12 @@
 
         {{-- Tabs --}}
         @if ($isIT)
-            <div
+            <div class="kb-tabs"
                 style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; align-items: center;">
 
                 {{-- Tab Published --}}
                 <a href="{{ route('knowledge-base.index', ['tab' => 'published']) }}"
-                    class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg border transition-all"
+                    class="kb-tab inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg border transition-all"
                     @if ($tab === 'published') style="border-color: #3b82f6; color: #2563eb; background-color: #eff6ff;"
                     @else
                         style="border-color: #e2e8f0; color: #64748b; background-color: #ffffff;" @endif>
@@ -79,7 +79,7 @@
 
                 {{-- Tab Draft --}}
                 <a href="{{ route('knowledge-base.index', ['tab' => 'draft']) }}"
-                    class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg border transition-all"
+                    class="kb-tab inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg border transition-all"
                     @if ($tab === 'draft') style="border-color: #f59e0b; color: #d97706; background-color: #fffbeb;"
                     @else
                         style="border-color: #e2e8f0; color: #64748b; background-color: #ffffff;" @endif>
@@ -94,7 +94,7 @@
 
                 {{-- Tab Artikel Saya --}}
                 <a href="{{ route('knowledge-base.index', ['tab' => 'mine']) }}"
-                    class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg border transition-all"
+                    class="kb-tab inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg border transition-all"
                     @if ($tab === 'mine') style="border-color: #8b5cf6; color: #7c3aed; background-color: #f5f3ff;"
                     @else
                         style="border-color: #e2e8f0; color: #64748b; background-color: #ffffff;" @endif>

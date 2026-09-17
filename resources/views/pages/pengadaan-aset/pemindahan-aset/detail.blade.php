@@ -52,23 +52,20 @@
 
                             {{-- Foto Barang --}}
                             <div class="md:col-span-2">
-                                <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Barang</label>
                                 @if ($pengadaan->foto_barang)
-                                    <img src="{{ asset('storage/' . $pengadaan->foto_barang) }}" alt="Foto Barang"
-                                        class="mt-2 h-24 rounded shadow-md object-cover border border-gray-200 w-1/2" />
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $pengadaan->foto_barang, 'label' => 'Foto Barang'])
                                 @else
+                                    <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Barang</label>
                                     <p class="mt-2 text-sm text-slate-600">Tidak ada foto barang</p>
                                 @endif
                             </div>
 
                             {{-- Foto Barcode --}}
                             <div class="md:col-span-2">
-                                <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Barcode</label>
-
                                 @if ($pengadaan->foto_barcode)
-                                    <img src="{{ asset('storage/' . $pengadaan->foto_barcode) }}" alt="Foto Barcode"
-                                        class="mt-2 h-24 rounded shadow-md object-cover border border-gray-200 w-1/2" />
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $pengadaan->foto_barcode, 'label' => 'Foto Barcode'])
                                 @else
+                                    <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Barcode</label>
                                     <p class="mt-2 text-sm text-slate-600">Tidak ada foto barcode</p>
                                 @endif
                             </div>
@@ -86,4 +83,8 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('assets/js/preview.js') }}"></script>
+    @endpush
 @endsection

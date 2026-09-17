@@ -41,12 +41,16 @@
                                 <x-form.input name="nama_barang" label="Nama Barang" :value="old('nama_barang', $pengadaan->nama_barang ?? '')" required />
 
                                 {{-- Foto Barang --}}
-                                <x-form.file-upload name="foto_barang" label="Foto Barang"
-                                    preview="{{ $pengadaan->foto_barang ?? null }}" />
+                                <x-form.file-upload name="foto_barang" label="Foto Barang" />
+                                @if ($pengadaan->foto_barang)
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $pengadaan->foto_barang, 'label' => ''])
+                                @endif
 
                                 {{-- Foto Barcode --}}
-                                <x-form.file-upload name="foto_barcode" label="Foto Barcode (Jika Ada)"
-                                    preview="{{ $pengadaan->foto_barcode ?? null }}" />
+                                <x-form.file-upload name="foto_barcode" label="Foto Barcode (Jika Ada)" />
+                                @if ($pengadaan->foto_barcode)
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $pengadaan->foto_barcode, 'label' => ''])
+                                @endif
                             </div>
 
                             <div class="mt-6">
@@ -66,4 +70,5 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
+    <script src="{{ asset('assets/js/preview.js') }}"></script>
 @endpush

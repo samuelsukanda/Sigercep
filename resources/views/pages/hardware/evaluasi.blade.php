@@ -14,33 +14,37 @@
                 <div
                     style="background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.08);
                             border:1px solid #e5e7eb; padding:16px 20px; margin-bottom:20px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-                            <label style="font-size:12px; font-weight:600; color:#4b5563;">Filter Tahun:</label>
-                            <select id="filterTahun" onchange="gantiFilterEvaluasi()"
-                                style="padding:8px 12px; font-size:13px; border:1px solid #d1d5db; border-radius:8px; outline:none; min-width:120px;">
-                                <option value="">Semua Tahun</option>
-                            </select>
-                            
-                            <label style="font-size:12px; font-weight:600; color:#4b5563; margin-left:8px;">Bulan:</label>
-                            <select id="filterBulan" onchange="gantiFilterEvaluasi()"
-                                style="padding:8px 12px; font-size:13px; border:1px solid #d1d5db; border-radius:8px; outline:none; min-width:120px;">
-                                <option value="">Semua Bulan</option>
-                                <option value="01">Januari</option>
-                                <option value="02">Februari</option>
-                                <option value="03">Maret</option>
-                                <option value="04">April</option>
-                                <option value="05">Mei</option>
-                                <option value="06">Juni</option>
-                                <option value="07">Juli</option>
-                                <option value="08">Agustus</option>
-                                <option value="09">September</option>
-                                <option value="10">Oktober</option>
-                                <option value="11">November</option>
-                                <option value="12">Desember</option>
-                            </select>
+                    <div class="eval-filter" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+                        <div class="eval-filter-fields" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <div class="eval-filter-field" style="display:flex; align-items:center; gap:8px;">
+                                <label style="font-size:12px; font-weight:600; color:#4b5563;">Filter Tahun:</label>
+                                <select id="filterTahun" onchange="gantiFilterEvaluasi()"
+                                    style="padding:8px 12px; font-size:13px; border:1px solid #d1d5db; border-radius:8px; outline:none; min-width:120px;">
+                                    <option value="">Semua Tahun</option>
+                                </select>
+                            </div>
+
+                            <div class="eval-filter-field" style="display:flex; align-items:center; gap:8px;">
+                                <label style="font-size:12px; font-weight:600; color:#4b5563;">Bulan:</label>
+                                <select id="filterBulan" onchange="gantiFilterEvaluasi()"
+                                    style="padding:8px 12px; font-size:13px; border:1px solid #d1d5db; border-radius:8px; outline:none; min-width:120px;">
+                                    <option value="">Semua Bulan</option>
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
+                        <div class="eval-filter-action">
                             <button type="button" onclick="bukaModalEvaluasi()"
                                 style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px;
                                        font-size:12px; font-weight:600; color:#fff; border:none; cursor:pointer;

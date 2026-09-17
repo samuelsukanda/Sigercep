@@ -55,7 +55,7 @@
                                     </div>
 
                                     {{-- Satuan --}}
-                                    <div class="w-40 ml-1">
+                                    <div class="form-satuan w-40 ml-1">
                                         <x-form.select name="satuan" label="Satuan" :options="config('units.satuan')" :selected="old('satuan', $desain->satuan ?? '')"
                                             required />
                                     </div>

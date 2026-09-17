@@ -33,8 +33,10 @@
                                     required>{{ old('kendala', $visitasi->kendala) }}</x-form.textarea>
 
                                 {{-- Foto --}}
-                                <x-form.file-upload label="Foto Komplain/Kerusakan/Kendala Di Lapangan" name="foto"
-                                    preview="{{ $visitasi->foto ?? null }}" />
+                                <x-form.file-upload label="Foto Komplain/Kerusakan/Kendala Di Lapangan" name="foto" />
+                                @if ($visitasi->foto)
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $visitasi->foto, 'label' => ''])
+                                @endif
                             </div>
 
                             <div class="mt-6">
@@ -54,4 +56,5 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
+    <script src="{{ asset('assets/js/preview.js') }}"></script>
 @endpush

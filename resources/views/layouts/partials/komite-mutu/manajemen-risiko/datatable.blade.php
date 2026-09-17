@@ -4,7 +4,6 @@
         <thead class="text-xs text-slate-500 uppercase bg-white dark:bg-slate-900/30 dark:text-slate-300">
             <tr>
                 <th class="px-6 py-3">No</th>
-                <th class="hidden">No Urut Real</th>
                 <th class="px-6 py-3">Unit</th>
                 <th class="px-6 py-3 min-w-[300px]">Risiko</th>
                 <th class="px-6 py-3 min-w-[150px]">Kode Risiko</th>

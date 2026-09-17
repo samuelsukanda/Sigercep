@@ -41,9 +41,7 @@
                             {{-- Foto --}}
                             @if ($visitasi->foto)
                                 <div class="md:col-span-2">
-                                    <label class="block mb-1 text-sm font-semibold text-slate-700">Foto Komplain</label>
-                                    <img src="{{ asset('storage/' . $visitasi->foto) }}" alt="Foto Komplain"
-                                        class="mt-2 h-24 rounded shadow-md object-cover border border-gray-200 w-1/2" />
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $visitasi->foto, 'label' => 'Foto Komplain'])
                                 </div>
                             @endif
                         </div>
@@ -59,4 +57,8 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('assets/js/preview.js') }}"></script>
+    @endpush
 @endsection

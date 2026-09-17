@@ -51,7 +51,6 @@ class IndicatorController extends Controller
         ]);
 
         $indicator = Indicator::create([
-            'no_urut' => '',
             'pj' => $request->pj,
             'nama_indikator' => $request->nama_indikator,
             'jenis_indikator' => $request->jenis_indikator,

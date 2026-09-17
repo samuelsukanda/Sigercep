@@ -62,7 +62,6 @@ $(document).ready(function () {
                     return "";
                 },
             },
-            { data: "no_urut" },
             { data: "unit", className: "font-bold" },
             { data: "risiko" },
             {
@@ -182,11 +181,15 @@ $(document).ready(function () {
                 orderable: false,
                 targets: 0,
             },
-            {
-                visible: false,
-                targets: 1,
-            }
         ],
+
+        drawCallback: function (settings) {
+            var api = new $.fn.dataTable.Api(settings);
+            var start = api.page.info().start;
+            api.column(0, { page: "current" }).nodes().each(function (cell, i) {
+                cell.innerHTML = start + i + 1;
+            });
+        },
 
         initComplete: function () {
             $(this.api().table().container()).addClass(
@@ -194,18 +197,6 @@ $(document).ready(function () {
             );
         },
 
-        order: [[1, "asc"]],
+        order: [],
     });
-
-    table
-        .on("draw.dt", function () {
-            let i = 1;
-
-            table
-                .cells(null, 0, { search: "applied", order: "applied" })
-                .every(function (cell) {
-                    this.data(i++);
-                });
-        })
-        .draw();
 });

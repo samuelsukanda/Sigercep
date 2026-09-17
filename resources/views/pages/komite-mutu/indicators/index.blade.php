@@ -203,9 +203,9 @@
             class="bg-white dark:bg-slate-850 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden mb-8">
             {{-- Filters Card Header --}}
             <div class="p-6 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50">
-                <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="ind-filter-bar flex flex-wrap items-center justify-between gap-2">
                     {{-- Category Tabs --}}
-                    <div class="flex flex-wrap items-center">
+                    <div class="ind-tabs flex flex-wrap items-center">
                         @foreach ($jenisOptions as $opt)
                             @php
                                 $isActive = $jenis === $opt;
@@ -221,7 +221,7 @@
                     </div>
 
                     {{-- Year Selector + Tambah Data --}}
-                    <div class="flex items-center gap-2">
+                    <div class="ind-year flex items-center gap-4">
                         <form method="GET" action="{{ route('indicators.index') }}" id="filterForm"
                             class="flex items-center gap-2">
                             <label for="tahunSelect"
@@ -239,7 +239,7 @@
                         @canAccess('mutu', 'update')
                         <a href="{{ route('indicator-values.bulk-edit', ['tahun' => $tahun, 'jenis' => $jenis]) }}"
                             class="inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-white uppercase rounded-lg shadow-md hover:shadow-sm active:opacity-85 transition-all"
-                            style="background-color: var(--accent) !important;">
+                            style="background-color: var(--accent) !important; margin-left: 12px !important;">
                             <i class="fas fa-plus mr-1"></i> Tambah Data
                         </a>
                         @endcanAccess

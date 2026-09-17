@@ -2,7 +2,7 @@
 let table = $("#peminjamanTable").DataTable({
     processing: true,
     serverSide: true,
-    responsive: true,
+        responsive: false,
     pageLength: 10,
     lengthMenu: [
         [10, 25, 50, 100, -1],

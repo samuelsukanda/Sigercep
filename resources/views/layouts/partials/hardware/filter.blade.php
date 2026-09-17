@@ -21,7 +21,7 @@
                 </div>
 
                 {{-- Action Buttons --}}
-                <div class="flex items-end flex-1 justify-between filter-action">
+                <div class="flex items-end flex-1 justify-between filter-action filter-action-hw">
                     <div class="flex items-end">
                         <!-- Button Cari -->
                         <button type="submit"
@@ -84,7 +84,7 @@
                         {{-- Tambah Data --}}
                         @canAccess('hardware', 'create')
                         <a href="{{ route('hardware.create') }}"
-                            class="inline-flex items-center justify-center
+                            class="btn-tambah-data inline-flex items-center justify-center
                             h-9 px-4 text-xs font-semibold text-white uppercase
                             rounded-lg shadow-md hover:shadow-sm active:opacity-85 transition-all"
                             style="background-color: var(--accent) !important;">

@@ -41,9 +41,9 @@
                     <h6 class="text-sm font-bold text-slate-800 dark:text-white uppercase m-0 ml-2">Pilih Periode & Kategori
                     </h6>
                 </div>
-                <div class="flex flex-wrap md:flex-nowrap items-center gap-4 flex-1 md:justify-end">
+                <div class="cap-filter-fields flex flex-wrap md:flex-nowrap items-center gap-4 flex-1 md:justify-end">
                     {{-- Jenis Select --}}
-                    <div class="flex items-center gap-2">
+                    <div class="cap-filter-field flex items-center gap-2">
                         <label class="text-xs font-bold text-slate-500 uppercase whitespace-nowrap mr-2">Kategori:</label>
                         <select name="jenis" onchange="this.form.submit()"
                             class="text-xs font-bold bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500">
@@ -55,7 +55,7 @@
                     </div>
 
                     {{-- Bulan Select --}}
-                    <div class="flex items-center gap-2">
+                    <div class="cap-filter-field flex items-center gap-2">
                         <label class="text-xs font-bold text-slate-500 uppercase whitespace-nowrap mr-2 ml-2">Bulan:</label>
                         <select name="bulan" onchange="this.form.submit()"
                             class="text-xs font-bold bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500">
@@ -67,7 +67,7 @@
                     </div>
 
                     {{-- Tahun Select --}}
-                    <div class="flex items-center gap-2">
+                    <div class="cap-filter-field flex items-center gap-2">
                         <label class="text-xs font-bold text-slate-500 uppercase whitespace-nowrap mr-2 ml-2">Tahun:</label>
                         <select name="tahun" onchange="this.form.submit()"
                             class="text-xs font-bold bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500">
@@ -86,9 +86,10 @@
         <div
             class="bg-white dark:bg-slate-850 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden mb-8">
             <div
-                class="p-6 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 flex justify-between items-center">
+                class="cap-form-head p-6 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 flex justify-between items-center">
                 <span class="text-sm font-bold text-slate-800 dark:text-white uppercase">
-                    Form Input: {{ $jenis }} - {{ $bulanNama[$bulan] }} {{ $tahun }}
+                    Form Input: {{ $jenis }}<br>
+                    {{ $bulanNama[$bulan] }} {{ $tahun }}
                 </span>
                 <button type="button" onclick="openAddModal()"
                     class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase rounded-lg shadow-md hover:shadow-lg active:opacity-85 transition-all text-white"

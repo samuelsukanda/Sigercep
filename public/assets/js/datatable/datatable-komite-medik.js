@@ -12,7 +12,7 @@ $(document).ready(function () {
                 d.unit = $("#unit").val();
             },
         },
-        responsive: true,
+        responsive: false,
         pageLength: 10,
         lengthMenu: [
             [10, 25, 50, 100, -1],

@@ -35,8 +35,10 @@
                                 <x-form.input name="jenis_hama" label="Jenis Hama" :value="old('jenis_hama', $komplain->jenis_hama ?? '')" readonly />
 
                                 {{-- Dokumentasi --}}
-                                <x-form.file-upload label="Dokumentasi" name="dokumentasi"
-                                    preview="{{ $komplain->dokumentasi ?? null }}" />
+                                <x-form.file-upload label="Dokumentasi" name="dokumentasi" />
+                                @if ($komplain->dokumentasi)
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $komplain->dokumentasi, 'label' => ''])
+                                @endif
 
                                 {{-- Status --}}
                                 <x-form.select label="Status" name="status" :options="['Pending', 'In Progress', 'Done']" :selected="old('status', $komplain->status)"
@@ -64,4 +66,5 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
+    <script src="{{ asset('assets/js/preview.js') }}"></script>
 @endpush

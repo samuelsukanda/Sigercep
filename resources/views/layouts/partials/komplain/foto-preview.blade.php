@@ -7,7 +7,9 @@
 
 <div x-data="previewModal()">
 
-    <label class="block mb-1 text-sm font-semibold text-slate-700">{{ $label }}</label>
+    @if ($label)
+        <label class="block mb-1 text-sm font-semibold text-slate-700">{{ $label }}</label>
+    @endif
 
     {{-- GRID --}}
     <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-top:10px;">
@@ -55,7 +57,7 @@
             ">
 
             {{-- CLOSE BUTTON --}}
-            <button @click="closeModal()"
+            <button type="button" @click="closeModal()"
                 style="
                 position: absolute;
                 top: 20px;

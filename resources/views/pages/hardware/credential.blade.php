@@ -13,10 +13,10 @@
                 {{-- Filter --}}
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-4">
                     <div class="px-5 py-4">
-                        <div class="flex flex-wrap gap-3 items-end justify-between">
-                            <div class="flex flex-wrap gap-3 items-end">
+                        <div class="cred-filter flex flex-wrap gap-3 items-end justify-between">
+                            <div class="cred-filter-fields flex flex-wrap gap-3 items-end">
                                 {{-- Cari + Reset --}}
-                                <div class="flex flex-col mr-1" style="min-width:280px;">
+                                <div class="cred-filter-field flex flex-col mr-1" style="min-width:280px;">
                                     <label class="text-xs font-semibold text-gray-600 mb-1.5">Cari</label>
                                     <div class="flex gap-2 items-center">
                                         <input type="text" id="filterCari" placeholder="Nama PC / IP / Unit"
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-end gap-2">
+                            <div class="cred-filter-tambah flex items-end gap-2">
                                 <button type="button" onclick="bukaModalTambah()"
                                     class="inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-white uppercase rounded-lg shadow-md hover:shadow-sm active:opacity-85 transition-all"
                                     style="background-color: var(--accent) !important;">

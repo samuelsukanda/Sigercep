@@ -22,7 +22,6 @@ class ManajemenRisikoController extends Controller
 
             $columns = [
                 '',
-                'id',
                 'unit',
                 'risiko',
                 'kode_risiko',
@@ -95,7 +94,6 @@ class ManajemenRisikoController extends Controller
             foreach ($records as $item) {
                 $data[] = [
                     'id' => $item->id,
-                    'no_urut' => $item->no_urut ?? $item->id,
                     'unit' => $item->unit,
                     'risiko' => $item->risiko,
                     'kode_risiko' => $item->kode_risiko,

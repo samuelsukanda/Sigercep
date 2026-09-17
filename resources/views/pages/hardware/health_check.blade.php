@@ -17,8 +17,8 @@
                 {{-- Filter --}}
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-4">
                     <div class="px-5 py-4">
-                        <div class="flex flex-wrap gap-3 items-end justify-between">
-                            <div class="flex flex-wrap gap-3 items-end">
+                        <div class="hc-filter flex flex-wrap gap-3 items-end justify-between">
+                            <div class="hc-filter-fields flex flex-wrap gap-3 items-end">
                                 {{-- Cari --}}
                                 <div class="flex flex-col mr-1" style="min-width:180px;">
                                     <label class="text-xs font-semibold text-gray-600 mb-1.5">Cari</label>
@@ -54,21 +54,22 @@
                                     </select>
                                 </div>
 
-                                {{-- Button Cari --}}
-                                <button type="button" onclick="cariFilter()" data-filter-submit
-                                    class="inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-white uppercase rounded-lg shadow-md hover:shadow-sm active:opacity-85 transition-all"
-                                    style="background-color: var(--accent) !important;">
-                                    <i class="fas fa-search mr-1"></i>
-                                </button>
+                                {{-- Button Cari + Reset --}}
+                                <div class="flex items-end gap-2 hc-filter-actions">
+                                    <button type="button" onclick="cariFilter()" data-filter-submit
+                                        class="inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-white uppercase rounded-lg shadow-md hover:shadow-sm active:opacity-85 transition-all"
+                                        style="background-color: var(--accent) !important;">
+                                        <i class="fas fa-search mr-1"></i> Cari
+                                    </button>
 
-                                {{-- Button Reset --}}
-                                <button type="button" onclick="resetFilter()"
-                                    class="btn-reset inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-slate-700 uppercase rounded-lg shadow-md bg-gray-200 hover:shadow-sm active:opacity-85 transition-all">
-                                    Reset
-                                </button>
+                                    <button type="button" onclick="resetFilter()"
+                                        class="btn-reset inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-slate-700 uppercase rounded-lg shadow-md bg-gray-200 hover:shadow-sm active:opacity-85 transition-all">
+                                        Reset
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="flex items-end">
+                            <div class="flex items-end hc-filter-tambah">
                                 {{-- Button Tambah --}}
                                 <button type="button" onclick="bukaModalTambah()"
                                     class="inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-white uppercase rounded-lg shadow-md hover:shadow-sm active:opacity-85 transition-all"

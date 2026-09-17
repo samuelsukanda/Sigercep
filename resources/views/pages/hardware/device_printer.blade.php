@@ -127,26 +127,28 @@
                                             <td class="border border-gray-200 px-3 py-2">
                                                 {{ $device->keterangan ?? '-' }}</td>
                                             <td class="border border-gray-200 px-3 py-2 text-center">
-                                                @if ($device->foto)
+                                                <div class="device-aksi">
+                                                    @if ($device->foto)
+                                                        <button type="button"
+                                                            onclick="openPhotoModal('{{ asset('storage/' . $device->foto) }}', '{{ $device->nama_perangkat }}')"
+                                                            class="text-indigo-600 hover:text-indigo-800 text-sm"
+                                                            style="background: none; border: none; cursor: pointer; padding: 0;"
+                                                            title="Lihat Foto">
+                                                            <i class="fa-solid fa-eye" style="font-size: 14px;"></i>
+                                                        </button>
+                                                    @endif
                                                     <button type="button"
-                                                        onclick="openPhotoModal('{{ asset('storage/' . $device->foto) }}', '{{ $device->nama_perangkat }}')"
-                                                        class="text-indigo-600 hover:text-indigo-800 text-sm mr-2"
+                                                        onclick="openEditModal({{ $device->id }}, '{{ addslashes($device->nama_perangkat) }}', '{{ addslashes($device->jenis) }}', '{{ addslashes($device->merk_type ?? '') }}', '{{ $device->kondisi }}', '{{ addslashes($device->keterangan ?? '') }}')"
+                                                        class="text-amber-600 hover:text-amber-800"
                                                         style="background: none; border: none; cursor: pointer; padding: 0;"
-                                                        title="Lihat Foto">
-                                                        <i class="fa-solid fa-eye" style="font-size: 14px;"></i>
+                                                        title="Edit">
+                                                        <i class="fa-solid fa-pen-to-square" style="font-size: 14px;"></i>
                                                     </button>
-                                                @endif
-                                                <button type="button"
-                                                    onclick="openEditModal({{ $device->id }}, '{{ addslashes($device->nama_perangkat) }}', '{{ addslashes($device->jenis) }}', '{{ addslashes($device->merk_type ?? '') }}', '{{ $device->kondisi }}', '{{ addslashes($device->keterangan ?? '') }}')"
-                                                    class="text-amber-600 hover:text-amber-800 mr-2"
-                                                    style="background: none; border: none; cursor: pointer; padding: 0;"
-                                                    title="Edit">
-                                                    <i class="fa-solid fa-pen-to-square" style="font-size: 14px;"></i>
-                                                </button>
-                                                <x-button.action
-                                                    href="{{ route('hardware.device-printer.destroy', $device->id) }}"
-                                                    icon="trash" color="red" type="button" method="DELETE"
-                                                    title="Hapus" />
+                                                    <x-button.action
+                                                        href="{{ route('hardware.device-printer.destroy', $device->id) }}"
+                                                        icon="trash" color="red" type="button" method="DELETE"
+                                                        title="Hapus" />
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty

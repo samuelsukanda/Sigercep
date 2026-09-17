@@ -10,7 +10,6 @@ class Indicator extends Model
     use HasFactory;
 
     protected $fillable = [
-        'no_urut',
         'pj',
         'nama_indikator',
         'jenis_indikator',

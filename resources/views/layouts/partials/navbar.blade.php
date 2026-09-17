@@ -28,25 +28,16 @@
 
         <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
             <div class="flex items-center md:ml-auto md:pr-4"></div>
-            <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
+            <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full navbar-menu">
                 {{-- Profile --}}
-                <li class="flex items-center h-full cursor-pointer" title="Nama">
-                    <div class="flex items-center space-x-3">
+                <li class="flex items-center h-full cursor-pointer navbar-profile" title="Profil">
+                    <div class="navbar-profile-text">
                         @if (Auth::check())
-                            <span class="text-sm font-semibold uppercase"
+                            <span class="text-sm font-semibold uppercase navbar-profile-name"
                                 style="color: var(--accent) !important;">{{ ucwords(str_replace('.', ' ', Auth::user()->name)) }}</span>
-                        @endif
-                    </div>
-                </li>
-                <li class="flex items-center h-full px-1 cursor-pointer">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-sm font-semibold" style="color: var(--accent) !important;"> - </span>
-                    </div>
-                </li>
-                <li class="flex items-center h-full pr-2 cursor-pointer" title="Jabatan">
-                    <div class="flex items-center space-x-3">
-                        @if (Auth::check())
-                            <span class="text-sm font-semibold uppercase"
+                            <span class="text-sm font-semibold navbar-profile-sep"
+                                style="color: var(--accent) !important;">&nbsp;-&nbsp;</span>
+                            <span class="text-sm font-semibold uppercase navbar-profile-jabatan"
                                 style="color: var(--accent) !important;">{{ Auth::user()->jabatan }}</span>
                         @endif
                     </div>
@@ -302,7 +293,7 @@
                 </li>
 
                 {{-- Toggle dark mode --}}
-                <li class="relative flex items-center px-2">
+                <li class="relative flex items-center px-2 navbar-dark-li">
                     <button type="button" onclick="SIGERCEP.toggleDark()" class="dark-toggle"
                         title="Mode gelap / terang" aria-label="Mode gelap / terang">
                         <i class="fas fa-sun dark-toggle-sun"></i>

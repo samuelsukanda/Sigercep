@@ -39,12 +39,16 @@
                                     placeholder="Pilih Tanggal" required />
 
                                 {{-- Foto --}}
-                                <x-form.file-upload name="foto" label="Foto Aset Yang Rusak"
-                                    preview="{{ $pengadaan->foto ?? null }}" />
+                                <x-form.file-upload name="foto" label="Foto Aset Yang Rusak" />
+                                @if ($pengadaan->foto)
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $pengadaan->foto, 'label' => ''])
+                                @endif
 
                                 {{-- Foto Barcode --}}
-                                <x-form.file-upload name="foto_barcode" label="Foto Barcode (Jika Ada)"
-                                    preview="{{ $pengadaan->foto_barcode ?? null }}" />
+                                <x-form.file-upload name="foto_barcode" label="Foto Barcode (Jika Ada)" />
+                                @if ($pengadaan->foto_barcode)
+                                    @include('layouts.partials.komplain.foto-preview', ['foto' => $pengadaan->foto_barcode, 'label' => ''])
+                                @endif
 
                                 {{-- Status --}}
                                 <x-form.select label="Status" name="status" :options="['Rusak Total', 'Bisa Diperbaiki']" :selected="old('status', $pengadaan->status)"
@@ -68,4 +72,5 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
+    <script src="{{ asset('assets/js/preview.js') }}"></script>
 @endpush
