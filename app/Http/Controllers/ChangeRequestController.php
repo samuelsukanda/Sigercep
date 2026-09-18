@@ -586,30 +586,6 @@ class ChangeRequestController extends Controller
             ]);
         }
 
-        $filePendukung = $changeRequest->file_pendukung;
-        $filePath      = $changeRequest->file_path;
-
-        if (!$isIT && $request->hasFile('file_pendukung')) {
-            // Hapus file lama
-            if ($changeRequest->file_path && Storage::disk('public')->exists($changeRequest->file_path)) {
-                Storage::disk('public')->delete($changeRequest->file_path);
-            }
-
-            $file         = $request->file('file_pendukung');
-            $originalName = $file->getClientOriginalName();
-            $folderPath   = 'change-request';
-            $targetPath   = "$folderPath/$originalName";
-
-            if (Storage::disk('public')->exists($targetPath)) {
-                $originalName = pathinfo($originalName, PATHINFO_FILENAME) . '_' . time() . '.pdf';
-                $targetPath   = "$folderPath/$originalName";
-            }
-
-            Storage::disk('public')->putFileAs($folderPath, $file, $originalName);
-            $filePendukung = $originalName;
-            $filePath      = $targetPath;
-        }
-
         if ($isIT) {
             $request->validate([
                 'status_pengerjaan' => 'required|in:Open,In Progress,Pending,QC,Done,Closed',
@@ -617,6 +593,7 @@ class ChangeRequestController extends Controller
                 'mandays'           => 'nullable|numeric|min:0',
                 'catatan'           => 'nullable|string',
                 'created_at'        => 'nullable|date',
+                'file_pendukung'    => 'nullable|file|mimes:pdf|max:5120',
             ]);
 
             $noTiket = $request->no_tiket;
@@ -645,9 +622,29 @@ class ChangeRequestController extends Controller
             $updateData = [
                 'permintaan_fitur'  => $request->permintaan_fitur,
                 'deskripsi'         => $request->deskripsi,
-                'file_pendukung'    => $filePendukung,
-                'file_path'         => $filePath,
             ];
+        }
+
+        if ($request->hasFile('file_pendukung')) {
+            // Hapus file lama
+            if ($changeRequest->file_path && Storage::disk('public')->exists($changeRequest->file_path)) {
+                Storage::disk('public')->delete($changeRequest->file_path);
+            }
+
+            $file         = $request->file('file_pendukung');
+            $originalName = $file->getClientOriginalName();
+            $folderPath   = 'change-request';
+            $targetPath   = "$folderPath/$originalName";
+
+            if (Storage::disk('public')->exists($targetPath)) {
+                $originalName = pathinfo($originalName, PATHINFO_FILENAME) . '_' . time() . '.pdf';
+                $targetPath   = "$folderPath/$originalName";
+            }
+
+            Storage::disk('public')->putFileAs($folderPath, $file, $originalName);
+
+            $updateData['file_pendukung'] = $originalName;
+            $updateData['file_path']      = $targetPath;
         }
 
         $changeRequest->update($updateData);

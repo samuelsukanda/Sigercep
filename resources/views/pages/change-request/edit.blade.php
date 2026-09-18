@@ -164,8 +164,13 @@
                                         @else
                                             <p class="text-sm text-slate-400 italic">Tidak ada file</p>
                                         @endif
+                                        <div class="mt-2">
+                                            <x-form.file-upload-pdf name="file_pendukung" label="" />
+                                            <p class="text-xs text-slate-500 mt-1">Maksimal ukuran file 5 MB (PDF).</p>
+                                        </div>
                                     @else
                                         <x-form.file-upload-pdf name="file_pendukung" label="Upload File Pendukung" />
+                                        <p class="text-xs text-slate-500 mt-1">Maksimal ukuran file 5 MB (PDF).</p>
                                     @endif
                                 </div>
                             </div>
