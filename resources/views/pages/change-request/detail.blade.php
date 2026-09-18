@@ -121,11 +121,7 @@
                                                     class="text-xs font-semibold text-slate-600 uppercase tracking-wide">{{ $label }}</span>
                                                 <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full"
                                                     style="{{ $badgeColor($status) }}">
-                                                    @if ($status === 'Ditolak' && !empty($changeRequest->{$field . '_by'}))
-                                                        Rejected by {{ ucwords(str_replace('.', ' ', $changeRequest->{$field . '_by'})) }}
-                                                    @else
-                                                        {{ $status }}
-                                                    @endif
+                                                    {{ $status }}
                                                 </span>
                                             </div>
                                             @if ($changeRequest->{$field . '_at'})
