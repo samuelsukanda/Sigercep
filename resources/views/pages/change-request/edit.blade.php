@@ -22,7 +22,7 @@
                                 <div>
                                     <label class="block text-sm font-semibold mb-1 text-slate-700">Nama</label>
                                     <input type="text"
-                                        class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-slate-500 text-sm"
+                                        class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-200 text-slate-700 text-sm"
                                         value="{{ ucwords(str_replace('.', ' ', $changeRequest->nama)) }}" disabled>
                                 </div>
 
@@ -30,7 +30,7 @@
                                 <div>
                                     <label class="block text-sm font-semibold mb-1 text-slate-700">Jabatan</label>
                                     <input type="text"
-                                        class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-slate-500 text-sm"
+                                        class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-200 text-slate-700 text-sm"
                                         value="{{ $changeRequest->user->jabatan ?? ($changeRequest->jabatan ?? '-') }}"
                                         disabled>
                                 </div>
@@ -41,7 +41,7 @@
                                         <label class="block text-sm font-semibold mb-1 text-slate-700">Tanggal
                                             Permintaan</label>
                                         <input type="text" id="created_at" name="created_at"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 text-slate-500"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-200 text-slate-700"
                                             value="{{ old('created_at', \Carbon\Carbon::parse($changeRequest->created_at)->format('d-m-Y')) }}"
                                             placeholder="Pilih Tanggal" readonly>
                                         @error('created_at')
@@ -127,9 +127,11 @@
 
                                 {{-- Permintaan Fitur --}}
                                 @if($isIT ?? false)
-                                    <x-form.select name="permintaan_fitur" label="Permintaan Fitur"
-                                        :options="config('units.permintaan_fitur')"
-                                        :selected="old('permintaan_fitur', $changeRequest->permintaan_fitur)" disabled />
+                                    <div class="select-disabled-gray">
+                                        <x-form.select name="permintaan_fitur" label="Permintaan Fitur"
+                                            :options="config('units.permintaan_fitur')"
+                                            :selected="old('permintaan_fitur', $changeRequest->permintaan_fitur)" disabled />
+                                    </div>
                                 @else
                                     <x-form.select name="permintaan_fitur" label="Permintaan Fitur"
                                         :options="config('units.permintaan_fitur')"
@@ -142,7 +144,7 @@
                                         Deskripsi
                                     </label>
                                     <textarea name="deskripsi" rows="5"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('deskripsi') border-red-500 @enderror"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('deskripsi') border-red-500 @enderror {{ ($isIT ?? false) ? 'bg-gray-200 text-slate-700' : '' }}"
                                         {{ ($isIT ?? false) ? 'disabled' : 'required' }}>{{ old('deskripsi', $changeRequest->deskripsi) }}</textarea>
                                     @error('deskripsi')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -185,13 +187,4 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (typeof flatpickr !== "undefined") {
-                flatpickr("#created_at", {
-                    dateFormat: "d-m-Y"
-                });
-            }
-        });
-    </script>
 @endpush

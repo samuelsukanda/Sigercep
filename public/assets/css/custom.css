@@ -455,6 +455,14 @@
     margin-top: 1rem;
 }
 
+/* Select2 disabled: samakan abu disabled (bg-gray-200) */
+.select-disabled-gray .select2-selection {
+    background-color: #e5e7eb !important;
+}
+.select-disabled-gray .select2-selection__rendered {
+    color: #334155 !important;
+}
+
 /* Device & Printer: tombol aksi selalu sejajar satu baris */
 .device-aksi {
     display: flex;
