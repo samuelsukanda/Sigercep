@@ -70,6 +70,18 @@
                                 @endif
                             </div>
 
+                            {{-- Mandays --}}
+                            <div class="w-full md:w-1/2 xl:w-1/3 px-3">
+                                <label class="block mb-1 text-sm font-semibold text-slate-700">Mandays</label>
+                                <p class="text-slate-600">{{ $changeRequest->mandays ?? '-' }}</p>
+                            </div>
+
+                            {{-- Catatan --}}
+                            <div class="w-full md:w-1/2 xl:w-1/3 px-3">
+                                <label class="block mb-1 text-sm font-semibold text-slate-700">Catatan</label>
+                                <p class="text-slate-600" style="white-space: pre-line;">{{ $changeRequest->catatan ?? '-' }}</p>
+                            </div>
+
                             {{-- Deskripsi --}}
                             <div class="w-full px-3">
                                 <label class="block mb-1 text-sm font-semibold text-slate-700">Deskripsi</label>
@@ -139,10 +151,8 @@
                                                 </div>
                                             @endif
                                             @if ($status === 'Ditolak' && !empty($changeRequest->reject_reason))
-                                                <div class="mt-2 text-xs text-slate-500">
-                                                    Alasan:
-                                                    <span class="text-slate-700">{{ $changeRequest->reject_reason }}</span>
-                                                </div>
+                                                <div class="mt-2 text-xs text-slate-500">Alasan:</div>
+                                                <div class="mt-1 text-xs text-slate-700" style="white-space: pre-line;">{{ $changeRequest->reject_reason }}</div>
                                             @endif
                                         </div>
                                     @endforeach

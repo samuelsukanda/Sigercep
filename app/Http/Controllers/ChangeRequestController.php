@@ -614,6 +614,8 @@ class ChangeRequestController extends Controller
             $request->validate([
                 'status_pengerjaan' => 'required|in:Open,In Progress,Pending,QC,Done,Closed',
                 'no_tiket'          => 'nullable|string|max:100',
+                'mandays'           => 'nullable|numeric|min:0',
+                'catatan'           => 'nullable|string',
                 'created_at'        => 'nullable|date',
             ]);
 
@@ -628,6 +630,8 @@ class ChangeRequestController extends Controller
             $updateData = [
                 'status_pengerjaan' => $request->status_pengerjaan,
                 'no_tiket'          => $noTiket,
+                'mandays'           => $request->mandays,
+                'catatan'           => $request->catatan,
             ];
 
             if ($request->filled('created_at')) {

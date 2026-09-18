@@ -23,6 +23,8 @@ class ChangeRequest extends Model
         'status',
         'status_pengerjaan',
         'no_tiket',
+        'mandays',
+        'catatan',
         'approval_1_status',
         'approval_1_by',
         'approval_1_at',

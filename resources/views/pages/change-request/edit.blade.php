@@ -100,6 +100,29 @@
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
+
+                                    {{-- Mandays (angka desimal) --}}
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-1 text-slate-700">Mandays</label>
+                                        <input type="number" name="mandays" step="0.01" min="0"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('mandays') border-red-500 @enderror"
+                                            value="{{ old('mandays', $changeRequest->mandays) }}"
+                                            placeholder="Contoh: 1.5">
+                                        @error('mandays')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Catatan --}}
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-1 text-slate-700">Catatan</label>
+                                        <textarea name="catatan" rows="3"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('catatan') border-red-500 @enderror"
+                                            placeholder="Catatan pengerjaan (opsional)">{{ old('catatan', $changeRequest->catatan) }}</textarea>
+                                        @error('catatan')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 @endif
 
                                 {{-- Permintaan Fitur --}}
