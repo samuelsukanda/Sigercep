@@ -266,11 +266,13 @@ class ChangeRequestController extends Controller
                     'approval_1_status'     => $item->approval_1_status ?? 'Menunggu',
                     'approval_1_by'         => $item->approval_1_by ?? null,
                     'approval_2_status'     => $item->approval_2_status ?? 'Menunggu',
+                    'approval_2_by'         => $item->approval_2_by ?? null,
                     'approvable_level'      => $this->approvableLevel($item),
                     'created_at_timestamp'  => Carbon::parse($item->created_at)->timestamp,
                     'tanggal_formatted'     => '
                     <div class="flex flex-col">
                         <span>' . Carbon::parse($item->created_at)->translatedFormat('d F Y') . '</span>
+                        <span class="text-xs text-gray-400">' . Carbon::parse($item->created_at)->format('H:i') . ' WIB</span>
                     </div>
                 ',
                     'can_update'            => $isIT || ($isOwner && !$wasApprover && $item->approval_1_status !== 'Disetujui'),
@@ -313,9 +315,9 @@ class ChangeRequestController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'permintaan_fitur' => 'required|in:Sigercep,HRIS,SIMRS,Website',
+            'permintaan_fitur' => 'required|in:SiGercep,HRIS,SIMRS,Website',
             'deskripsi'      => 'required|string',
-            'file_pendukung' => 'nullable|file|mimes:pdf|max:20480',
+            'file_pendukung' => 'nullable|file|mimes:pdf|max:5120',
         ]);
 
         $user = Auth::user();
@@ -490,9 +492,14 @@ class ChangeRequestController extends Controller
             abort(403, 'Anda tidak berhak menyetujui request ini.');
         }
 
+        if ($level === 1 && $request->input('decision') === 'Ditolak') {
+            abort(403, 'Hanya Approver 2 yang dapat menolak pengajuan.');
+        }
+
         $request->validate([
             'decision' => 'required|in:Disetujui,Ditolak',
             'tanda_tangan' => 'required_if:decision,Disetujui|nullable|string',
+            'reject_reason' => 'required_if:decision,Ditolak|nullable|string|max:1000',
         ]);
 
         $user = Auth::user();
@@ -532,6 +539,7 @@ class ChangeRequestController extends Controller
             }
         } else {
             // Level 2
+            $cr->reject_reason = $isRejected ? $request->reject_reason : null;
             $cr->save();
             $this->notifyRequester($cr, $isRejected ? 'Ditolak' : 'Disetujui', 2);
         }
@@ -568,9 +576,9 @@ class ChangeRequestController extends Controller
 
         if (!$isIT) {
             $request->validate([
-                'permintaan_fitur'  => 'required|in:Sigercep,HRIS,SIMRS,Website',
+                'permintaan_fitur'  => 'required|in:SiGercep,HRIS,SIMRS,Website',
                 'deskripsi'         => 'required|string',
-                'file_pendukung'    => 'nullable|file|mimes:pdf|max:20480',
+                'file_pendukung'    => 'nullable|file|mimes:pdf|max:5120',
             ]);
         }
 
@@ -605,9 +613,17 @@ class ChangeRequestController extends Controller
                 'created_at'        => 'nullable|date',
             ]);
 
+            $noTiket = $request->no_tiket;
+            if (($changeRequest->permintaan_fitur ?? null) === 'SIMRS' && $noTiket !== null) {
+                $noTiket = ltrim((string) $noTiket, '#');
+            }
+            if ($noTiket !== null && trim((string) $noTiket) === '') {
+                $noTiket = null;
+            }
+
             $updateData = [
                 'status_pengerjaan' => $request->status_pengerjaan,
-                'no_tiket'          => $request->no_tiket,
+                'no_tiket'          => $noTiket,
             ];
 
             if ($request->filled('created_at')) {

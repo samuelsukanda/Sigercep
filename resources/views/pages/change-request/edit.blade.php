@@ -72,10 +72,30 @@
                                     {{-- No Tiket --}}
                                     <div>
                                         <label class="block text-sm font-semibold mb-1 text-slate-700">No Tiket</label>
-                                        <input type="text" name="no_tiket"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('no_tiket') border-red-500 @enderror"
-                                            value="{{ old('no_tiket', $changeRequest->no_tiket) }}"
-                                            placeholder="Nomor tiket (opsional)">
+                                        @php
+                                            $isSimrsTiket = ($changeRequest->permintaan_fitur ?? null) === 'SIMRS';
+                                            $noTiketRaw = old('no_tiket', $changeRequest->no_tiket);
+                                            if ($noTiketRaw === 'No Tiket') {
+                                                $noTiketRaw = '';
+                                            }
+                                            if ($isSimrsTiket && $noTiketRaw !== null && $noTiketRaw !== '') {
+                                                $noTiketRaw = ltrim((string) $noTiketRaw, '#');
+                                            }
+                                        @endphp
+                                        @if ($isSimrsTiket)
+                                            <div class="flex w-full">
+                                                <span class="inline-flex items-center px-3 text-sm font-semibold text-slate-500 bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg select-none">#</span>
+                                                <input type="text" name="no_tiket"
+                                                    class="w-full px-3 py-2 border border-gray-300 rounded-r-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('no_tiket') border-red-500 @enderror"
+                                                    value="{{ $noTiketRaw }}"
+                                                    placeholder="Nomor tiket (opsional)">
+                                            </div>
+                                        @else
+                                            <input type="text" name="no_tiket"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('no_tiket') border-red-500 @enderror"
+                                                value="{{ $noTiketRaw }}"
+                                                placeholder="Nomor tiket (opsional)">
+                                        @endif
                                         @error('no_tiket')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                         @enderror

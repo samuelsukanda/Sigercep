@@ -29,9 +29,12 @@ let table = $("#changeRequestTable").DataTable({
         {
             // No Tiket
             data: "no_tiket",
-            render: function (data) {
-                if (!data || data === "No Tiket") {
-                    return `<span class="text-xs text-slate-400" style="font-style: italic !important;">No Tiket</span>`;
+            render: function (data, type, row) {
+                if (!data || data === "No Tiket" || String(data).trim() === "#") {
+                    return `<span class="text-xs text-slate-400" style="font-style: italic !important;">#No Tiket</span>`;
+                }
+                if ((row.permintaan_fitur || "") === "SIMRS" && !String(data).startsWith("#")) {
+                    return `#${data}`;
                 }
                 return data;
             },
@@ -76,17 +79,29 @@ let table = $("#changeRequestTable").DataTable({
                 const s1 = row.approval_1_status || "Menunggu";
                 const s2 = row.approval_2_status || "Menunggu";
                 let text, style;
-                if (s2 === "Disetujui") {
-                    text = "Approved";
+                if (s1 === "Ditolak" || s2 === "Ditolak") {
+                    const rawName = ((s2 === "Ditolak" ? row.approval_2_by : row.approval_1_by) || "").trim();
+                    if (rawName && rawName !== "-") {
+                        const formattedName = rawName.split('.').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                        text = "Rejected by " + formattedName;
+                    } else {
+                        text = "Ditolak";
+                    }
+                    style = "background-color:#fee2e2; color:#991b1b;";
+                } else if (s2 === "Disetujui") {
+                    const rawName = ((row.approval_2_by || "").trim());
+                    if (rawName && rawName !== "-") {
+                        const formattedName = rawName.split('.').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                        text = "Approved by " + formattedName;
+                    } else {
+                        text = "Approved";
+                    }
                     style = "background-color:#0f766e; color:#ffffff;";
                 } else if (s1 === "Disetujui") {
                     const rawName = (row.approval_1_by || "-");
                     const formattedName = rawName.split('.').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
                     text = "Approved by " + formattedName;
                     style = "background-color:#d1fae5; color:#065f46;";
-                } else if (s1 === "Ditolak" || s2 === "Ditolak") {
-                    text = "Ditolak";
-                    style = "background-color:#fee2e2; color:#991b1b;";
                 } else {
                     text = "Pending";
                     style = "background-color:#fef3c7; color:#92400e;";

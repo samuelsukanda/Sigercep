@@ -477,7 +477,7 @@ return [
     ],
 
     'permintaan_fitur' => [
-        'Sigercep',
+        'SiGercep',
         'HRIS',
         'SIMRS',
         'Website'

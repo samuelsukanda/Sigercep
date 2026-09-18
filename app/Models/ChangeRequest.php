@@ -31,6 +31,7 @@ class ChangeRequest extends Model
         'approval_2_by',
         'approval_2_at',
         'approval_2_ttd',
+        'reject_reason',
     ];
 
     public function user()

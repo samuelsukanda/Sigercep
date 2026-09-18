@@ -242,6 +242,24 @@
             position: relative;
         }
 
+        /* Select2 tombol × menempel di sebelah kiri panah dropdown, sejajar vertikal */
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            float: none;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-right: 52px;
+        }
+
         /* ===== BUTTONS ===== */
         .am-btn {
             display: inline-flex;
@@ -1146,6 +1164,7 @@
                 $ctx.find('select[name="stage2_user_id"]').each(function() {
                     $(this).select2({
                         placeholder: '— Pilih User —',
+                        allowClear: true,
                         width: '100%'
                     });
                 });
@@ -1155,6 +1174,7 @@
                     var $sel = $(this);
                     $sel.select2({
                         placeholder: '— Pilih User —',
+                        allowClear: true,
                         width: '100%'
                     });
                     // Auto-fill jabatan saat pilih user
@@ -1173,6 +1193,7 @@
                     var $sel = $(this);
                     $sel.select2({
                         placeholder: '— Pilih User —',
+                        allowClear: true,
                         width: '100%'
                     });
                     $sel.on('select2:select select2:clear', function() {
@@ -1197,6 +1218,7 @@
 
                 $('#modal-req-user').select2({
                     placeholder: '— Pilih User —',
+                    allowClear: true,
                     width: '100%',
                     dropdownParent: $('#modal-req-user').parent()
                 }).on('select2:select select2:clear', function() {
@@ -1211,6 +1233,7 @@
 
                 $('#modal-appr-user').select2({
                     placeholder: '— Pilih User —',
+                    allowClear: true,
                     width: '100%',
                     dropdownParent: $('#modal-appr-user').parent()
                 }).on('select2:select select2:clear', function() {

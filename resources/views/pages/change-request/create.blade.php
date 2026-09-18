@@ -26,8 +26,7 @@
                             {{-- Description --}}
                             <p class="text-sm text-slate-500 max-w-sm leading-relaxed mb-6">
                                 Pengajuan <span class="font-semibold text-slate-700">Change Request</span> hanya dapat
-                                dilakukan
-                                oleh jabatan struktural yang telah terdaftar di menu pengajuan.
+                                dilakukan oleh pejabat struktural.
                             </p>
 
                             {{-- Info box --}}
@@ -35,8 +34,7 @@
                                 style="background-color:#f5f3ff; border:1px solid #ddd6fe;">
                                 <i class="fas fa-info-circle mt-0.5 flex-shrink-0 mr-2" style="color:var(--accent);"></i>
                                 <p class="text-xs leading-relaxed" style="color:#5c4ebd;">
-                                    Jika Anda merasa memiliki hak akses, silakan hubungi Administrator sistem untuk
-                                    mendaftarkan jabatan Anda.
+                                    Jika Anda merasa memiliki hak akses, silahkan hubungi IT.
                                 </p>
                             </div>
 
@@ -95,6 +93,7 @@
 
                                     {{-- Upload File Pendukung (PDF) --}}
                                     <x-form.file-upload-pdf name="file_pendukung" label="Upload File Pendukung" />
+                                    <p class="text-xs text-slate-500 mt-1">Maksimal ukuran file 5 MB (PDF).</p>
                                 </div>
 
                                 <div class="mt-6">

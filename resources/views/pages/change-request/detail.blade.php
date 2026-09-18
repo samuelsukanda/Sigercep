@@ -35,7 +35,8 @@
                             <div class="w-full md:w-1/2 xl:w-1/3 px-3">
                                 <label class="block mb-1 text-sm font-semibold text-slate-700">Tanggal Permintaan</label>
                                 <p class="text-slate-600">
-                                    {{ \Carbon\Carbon::parse($changeRequest->created_at)->translatedFormat('d F Y') }}</p>
+                                    {{ \Carbon\Carbon::parse($changeRequest->created_at)->translatedFormat('d F Y') }}
+                                    <span class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($changeRequest->created_at)->format('H:i') }} WIB</span></p>
                             </div>
 
                             {{-- Status Pengerjaan --}}
@@ -62,10 +63,10 @@
                                 <label class="block mb-1 text-sm font-semibold text-slate-700">No Tiket</label>
                                 @if (!empty($changeRequest->no_tiket) && $changeRequest->no_tiket !== 'No Tiket')
                                     <p class="text-slate-600">
-                                        {{ $changeRequest->no_tiket }}
+                                        {{ (($changeRequest->permintaan_fitur ?? null) === 'SIMRS' && !str_starts_with((string) $changeRequest->no_tiket, '#') ? '#' : '') . $changeRequest->no_tiket }}
                                     </p>
                                 @else
-                                    <p class="text-xs text-slate-400" style="font-style: italic !important;">No Tiket</p>
+                                    <p class="text-xs text-slate-400" style="font-style: italic !important;">#No Tiket</p>
                                 @endif
                             </div>
 
@@ -92,13 +93,6 @@
                             <div class="px-3 py-1 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                                 <h6 class="font-bold text-sm text-slate-700"><i class="fas fa-check-double mr-1"></i>
                                     Persetujuan</h6>
-                                @php
-                                    $approvalTotal =
-                                        ($changeRequest->approval_1_status ?? 'Menunggu') .
-                                        ' / ' .
-                                        ($changeRequest->approval_2_status ?? 'Menunggu');
-                                @endphp
-                                <span class="text-xs font-semibold text-slate-500">{{ $approvalTotal }}</span>
                             </div>
 
                             <div class="p-4">
@@ -127,7 +121,11 @@
                                                     class="text-xs font-semibold text-slate-600 uppercase tracking-wide">{{ $label }}</span>
                                                 <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full"
                                                     style="{{ $badgeColor($status) }}">
-                                                    {{ $status }}
+                                                    @if ($status === 'Ditolak' && !empty($changeRequest->{$field . '_by'}))
+                                                        Rejected by {{ ucwords(str_replace('.', ' ', $changeRequest->{$field . '_by'})) }}
+                                                    @else
+                                                        {{ $status }}
+                                                    @endif
                                                 </span>
                                             </div>
                                             @if ($changeRequest->{$field . '_at'})
@@ -144,6 +142,12 @@
                                                         class="border rounded bg-white" style="max-height:80px;">
                                                 </div>
                                             @endif
+                                            @if ($status === 'Ditolak' && !empty($changeRequest->reject_reason))
+                                                <div class="mt-2 text-xs text-slate-500">
+                                                    Alasan:
+                                                    <span class="text-slate-700">{{ $changeRequest->reject_reason }}</span>
+                                                </div>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>
@@ -153,6 +157,7 @@
                                         id="approveForm" class="mt-4 rounded-lg bg-indigo-50 border border-indigo-100 p-3">
                                         @csrf
                                         <input type="hidden" name="decision" value="Disetujui" id="approvalDecision">
+                                        <input type="hidden" name="reject_reason" value="" id="rejectReason">
                                         <p class="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-2">
                                             <i class="fas fa-user-check mr-1"></i> Approval
                                         </p>
@@ -163,10 +168,16 @@
                                             </div>
                                             <input type="hidden" name="tanda_tangan" id="approval_tanda_tangan">
                                             <div class="mt-4 flex gap-2" style="align-items: center; flex-wrap: wrap;">
-                                                <button type="submit"
+                                                <button type="button" id="approval-approve"
                                                     class="relative mb-2 mr-1 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300 px-4 py-2 flex items-center gap-2">
                                                     <i class="fa fa-check mr-1"></i> Approve
                                                 </button>
+                                                @if (($approvableLevel ?? 0) === 2)
+                                                    <button type="button" id="approval-reject"
+                                                        class="relative mb-2 mr-1 text-white border border-solid rounded-lg bg-gradient-to-tl from-red-600 to-orange-600 border-red-300 px-4 py-2 flex items-center gap-2">
+                                                        <i class="fa fa-times mr-1"></i> Reject
+                                                    </button>
+                                                @endif
                                                 <button type="button" id="approval-undo"
                                                     class="relative mb-2 mr-1 text-white border border-solid rounded-lg bg-gradient-to-tl from-zinc-800 to-zinc-700 border-slate-100 px-4 py-2 flex items-center gap-2">
                                                     <i class="fa fa-undo mr-1"></i> Undo
@@ -209,6 +220,16 @@
             background-color: #059669 !important;
         }
 
+        .btn-swal-reject {
+            background-color: #dc2626 !important;
+            color: #ffffff !important;
+            transition: background-color 0.2s !important;
+        }
+
+        .btn-swal-reject:hover {
+            background-color: #b91c1c !important;
+        }
+
         .btn-swal-cancel {
             background-color: #6b7280 !important;
             color: #ffffff !important;
@@ -229,10 +250,13 @@
             const form = document.getElementById("approveForm");
             const clearBtn = document.getElementById("approval-clear");
             const undoBtn = document.getElementById("approval-undo");
+            const approveBtn = document.getElementById("approval-approve");
+            const rejectBtn = document.getElementById("approval-reject");
             const ttdInput = document.getElementById("approval_tanda_tangan");
             const decisionInput = document.getElementById("approvalDecision");
+            const rejectInput = document.getElementById("rejectReason");
 
-            if (!canvas || !form || !clearBtn || !undoBtn || !ttdInput) return;
+            if (!canvas || !form || !clearBtn || !undoBtn || !approveBtn || !ttdInput || !rejectInput) return;
 
             function resizeCanvas() {
                 const ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -262,8 +286,21 @@
                 }
             });
 
+            approveBtn.addEventListener("click", function() {
+                decisionInput.value = "Disetujui";
+                form.requestSubmit();
+            });
+
+            if (rejectBtn) {
+                rejectBtn.addEventListener("click", function() {
+                    decisionInput.value = "Ditolak";
+                    form.requestSubmit();
+                });
+            }
+
             form.addEventListener("submit", function(e) {
-                if (decisionInput.value === "Disetujui" && signaturePad.isEmpty()) {
+                const isApprove = decisionInput.value === "Disetujui";
+                if (isApprove && signaturePad.isEmpty()) {
                     e.preventDefault();
                     Swal.fire({
                         icon: 'warning',
@@ -279,19 +316,29 @@
                 e.preventDefault();
                 ttdInput.value = signaturePad.isEmpty() ? '' : signaturePad.toDataURL('image/png');
                 Swal.fire({
-                    title: 'Konfirmasi Persetujuan',
-                    text: 'Apakah Anda yakin?',
+                    title: isApprove ? 'Konfirmasi Persetujuan' : 'Konfirmasi Penolakan',
+                    text: isApprove ? 'Apakah Anda yakin?' : 'Tolak pengajuan ini?',
                     icon: 'question',
                     showCancelButton: true,
+                    input: isApprove ? undefined : 'textarea',
+                    inputPlaceholder: isApprove ? undefined : 'Tulis alasan penolakan...',
+                    inputValidator: isApprove ? undefined : (value) => {
+                        if (!value || !value.trim()) {
+                            return 'Alasan penolakan wajib diisi!';
+                        }
+                    },
                     customClass: {
-                        confirmButton: 'btn-swal-approve',
+                        confirmButton: isApprove ? 'btn-swal-approve' : 'btn-swal-reject',
                         cancelButton: 'btn-swal-cancel'
                     },
-                    confirmButtonText: 'Ya, Setujui',
+                    confirmButtonText: isApprove ? 'Ya, Setujui' : 'Ya, Tolak',
                     cancelButtonText: 'Batal',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        if (!isApprove) {
+                            rejectInput.value = result.value || '';
+                        }
                         Swal.fire({
                             title: "Berhasil!",
                             text: "Persetujuan sedang diproses...",
