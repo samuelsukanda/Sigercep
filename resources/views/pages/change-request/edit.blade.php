@@ -52,7 +52,7 @@
                                     {{-- Status Pengerjaan --}}
                                     <div>
                                         <label class="block text-sm font-semibold mb-1 text-slate-700">
-                                            Status Pengerjaan
+                                            Status Pengerjaan IT
                                         </label>
                                         <select name="status_pengerjaan"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('status_pengerjaan') border-red-500 @enderror"

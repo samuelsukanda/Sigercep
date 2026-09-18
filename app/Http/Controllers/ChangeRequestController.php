@@ -318,6 +318,8 @@ class ChangeRequestController extends Controller
             'permintaan_fitur' => 'required|in:SiGercep,HRIS,SIMRS,Website',
             'deskripsi'      => 'required|string',
             'file_pendukung' => 'nullable|file|mimes:pdf|max:5120',
+        ], [
+            'required' => 'Wajib diisi',
         ]);
 
         $user = Auth::user();
@@ -579,6 +581,8 @@ class ChangeRequestController extends Controller
                 'permintaan_fitur'  => 'required|in:SiGercep,HRIS,SIMRS,Website',
                 'deskripsi'         => 'required|string',
                 'file_pendukung'    => 'nullable|file|mimes:pdf|max:5120',
+            ], [
+                'required' => 'Wajib diisi',
             ]);
         }
 

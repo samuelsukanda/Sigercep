@@ -22,10 +22,10 @@
 
                 {{-- Status Pengerjaan --}}
                 <div class="flex flex-col mr-1 filter-item" style="min-width:148px; flex:1 1 148px; max-width:180px;">
-                    <label class="text-xs font-semibold text-gray-600 mb-1.5">Status Pengerjaan</label>
+                    <label class="text-xs font-semibold text-gray-600 mb-1.5">Status Pengerjaan IT</label>
                     <select id="filter_status_pengerjaan" name="status_pengerjaan"
                         class="select2 w-full border-gray-300 text-gray-700 outline-none transition-all">
-                        <option value="">Semua Status Pengerjaan</option>
+                        <option value="">Semua Status Pengerjaan IT</option>
                         <option value="Open" {{ request('status_pengerjaan') == 'Open' ? 'selected' : '' }}>Open</option>
                         <option value="In Progress" {{ request('status_pengerjaan') == 'In Progress' ? 'selected' : '' }}>In Progress</option>
                         <option value="Pending" {{ request('status_pengerjaan') == 'Pending' ? 'selected' : '' }}>Pending</option>

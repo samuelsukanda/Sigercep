@@ -41,7 +41,7 @@
 
                             {{-- Status Pengerjaan --}}
                             <div class="w-full md:w-1/2 xl:w-1/3 px-3">
-                                <label class="block mb-1 text-sm font-semibold text-slate-700">Status Pengerjaan</label>
+                                <label class="block mb-1 text-sm font-semibold text-slate-700">Status Pengerjaan IT</label>
                                 @php
                                     $spColor = match ($changeRequest->status_pengerjaan ?? 'Open') {
                                         'Done' => 'background-color:#0b5394; color:#ffffff;',
@@ -73,7 +73,7 @@
                             {{-- Deskripsi --}}
                             <div class="w-full px-3">
                                 <label class="block mb-1 text-sm font-semibold text-slate-700">Deskripsi</label>
-                                <p class="text-slate-600 whitespace-pre-line">{{ $changeRequest->deskripsi }}</p>
+                                <p class="text-slate-600" style="white-space: pre-line;">{{ $changeRequest->deskripsi }}</p>
                             </div>
 
                             {{-- File Pendukung --}}
@@ -158,7 +158,7 @@
                                             <i class="fas fa-user-check mr-1"></i> Approval
                                         </p>
                                         <div class="border rounded shadow-sm bg-white p-4">
-                                            <div style="width: 100%; height: 200px; position: relative;">
+                                            <div class="approval-sign-wrap">
                                                 <canvas id="approval-signature-pad" class="rounded"
                                                     style="border: 2px solid #9e9e9e; width: 100%; height: 100%; touch-action: none; display: block;"></canvas>
                                             </div>
@@ -206,6 +206,18 @@
 @push('styles')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        .approval-sign-wrap {
+            width: 50%;
+            height: 200px;
+            position: relative;
+        }
+
+        @media (max-width: 640px) {
+            .approval-sign-wrap {
+                width: 100%;
+            }
+        }
+
         .btn-swal-approve {
             background-color: #10b981 !important;
             color: #ffffff !important;

@@ -40,7 +40,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof $ !== 'undefined' && $.fn.select2) {
                 $('#filter_status_pengerjaan').select2({
-                    placeholder: "Pilih Status Pengerjaan",
+                    placeholder: "Pilih Status Pengerjaan IT",
                     allowClear: true,
                     width: '100%'
                 });
