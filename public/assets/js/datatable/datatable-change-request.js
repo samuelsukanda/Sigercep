@@ -57,6 +57,14 @@ let table = $("#changeRequestTable").DataTable({
             },
         },
         {
+            // Deskripsi (maks 50 kata, dipotong di controller)
+            data: "deskripsi",
+            render: function (data) {
+                const text = data || "-";
+                return `<div style="max-width:320px; white-space: pre-line;">${text}</div>`;
+            },
+        },
+        {
             // Status Pengerjaan
             data: "status_pengerjaan",
             render: function (data) {

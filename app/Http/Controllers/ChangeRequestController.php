@@ -11,6 +11,7 @@ use App\Notifications\ChangeRequestApprovalNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class ChangeRequestController extends Controller
@@ -261,6 +262,7 @@ class ChangeRequestController extends Controller
                     'no_cr'                 => $item->id,
                     'jabatan'               => $item->user->jabatan ?? $item->jabatan ?? '-',
                     'permintaan_fitur'      => $item->permintaan_fitur ?? '-',
+                    'deskripsi'             => Str::words((string) ($item->deskripsi ?? '-'), 50),
                     'status_pengerjaan'     => $item->status_pengerjaan ?? 'Open',
                     'no_tiket'              => $item->no_tiket ?? 'No Tiket',
                     'approval_1_status'     => $item->approval_1_status ?? 'Menunggu',
