@@ -75,9 +75,12 @@ Route::middleware('auth')->group(function () {
         ->prefix('permissions')
         ->name('permissions.')
         ->group(function () {
-            Route::put('/update-rule/{rule}', [PermissionController::class, 'updateRule'])->name('updateRule');
+            Route::put('/update-rule/{rule}', [PermissionController::class, 'updateRule'])
+                ->name('updateRule')
+                ->middleware('permission:permissions,update');
             Route::delete('/delete-rule/{rule}', [PermissionController::class, 'deleteRule'])
-                ->name('deleteRule');
+                ->name('deleteRule')
+                ->middleware('permission:permissions,delete');
             Route::get('/', [PermissionController::class, 'index'])
                 ->name('index')
                 ->middleware('permission:permissions,read');
@@ -135,7 +138,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Report routes
-    Route::middleware(['auth', 'permission:helpdesk,manage'])->prefix('reports')->name('reports.')->group(function () {
+    Route::middleware(['auth', 'permission:reports,read'])->prefix('reports')->name('reports.')->group(function () {
         Route::get('summary', [ReportController::class, 'summary'])->name('summary');
         Route::get('export', [ReportController::class, 'export'])->name('export');
     });

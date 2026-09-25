@@ -187,7 +187,7 @@
                     {{-- Action Admin/IT --}}
                     @php
                         $user = auth()->user();
-                        $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+                        $isIT = \App\Helpers\PermissionHelper::canAccess('knowledge_base', 'update');
                         $canEdit = $isIT || $knowledgeBase->author_id === $user->id;
                     @endphp
 

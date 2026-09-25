@@ -11,7 +11,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::with('rules')->orderBy('menu')->get();
-        $users = \App\Models\User::orderBy('name')->get(['id', 'name', 'unit', 'jabatan']);
+        $users = \App\Models\User::orderBy('name')->get(['id', 'name', 'username', 'unit', 'jabatan']);
         $allMenus = config('permissions.menus', []);
         return view('layouts.permissions.index', compact('permissions', 'users', 'allMenus'));
     }
@@ -40,7 +40,7 @@ class PermissionController extends Controller
         if ($request->has('rules')) {
             foreach ($request->rules as $rule) {
                 if (!empty($rule['unit']) || !empty($rule['jabatan']) || !empty($rule['name'])) {
-                    $permission->rules()->create($rule);
+                    $permission->rules()->create($this->normalizeRule($rule));
                 }
             }
         }
@@ -77,7 +77,7 @@ class PermissionController extends Controller
             'name' => 'nullable|string'
         ]);
 
-        $permission->rules()->create($request->only(['unit', 'jabatan', 'name']));
+        $permission->rules()->create($this->normalizeRule($request->only(['unit', 'jabatan', 'name'])));
 
         return redirect(route('permissions.index') . '?saved=1')->with('success', 'Rule berhasil ditambahkan!');
     }
@@ -90,12 +90,20 @@ class PermissionController extends Controller
             'name'    => 'nullable|string|max:255',
         ]);
 
-        if (!$request->unit && !$request->jabatan && !$request->name) {
+        $data = $this->normalizeRule($request->only(['unit', 'jabatan', 'name']));
+
+        if (!$data['unit'] && !$data['jabatan'] && !$data['name']) {
             return response()->json(['error' => 'Minimal satu field harus diisi.'], 422);
         }
 
-        $rule->update($request->only(['unit', 'jabatan', 'name']));
+        $rule->update($data);
         return response()->json(['success' => true, 'rule' => $rule]);
+    }
+
+    /* Field kosong harus null, bukan string kosong: rule dengan unit='' tidak akan pernah cocok. */
+    private function normalizeRule(array $rule): array
+    {
+        return array_map(fn ($value) => $value === '' ? null : $value, $rule);
     }
 
     public function deleteRule(PermissionRule $rule)

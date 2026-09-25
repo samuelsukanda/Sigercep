@@ -52,22 +52,7 @@
 
                         {{-- Generate Otomatis --}}
                         @php
-                            $user = Auth::user();
-                            $canAccessPermissions = false;
-
-                            if ($user) {
-                                $name = strtolower(trim($user->name ?? ''));
-                                $unit = strtolower(trim($user->unit ?? ''));
-                                $jabatan = strtolower(trim($user->jabatan ?? ''));
-
-                                if (
-                                    $name == 'sammuel' &&
-                                    $unit == 'teknologi dan informasi' &&
-                                    $jabatan == 'operasional it technical support'
-                                ) {
-                                    $canAccessPermissions = true;
-                                }
-                            }
+                            $canAccessPermissions = \App\Helpers\PermissionHelper::isSuperadmin(Auth::user());
                         @endphp
 
                         @if ($canAccessPermissions)

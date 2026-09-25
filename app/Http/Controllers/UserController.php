@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\PermissionHelper;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -10,6 +11,8 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        abort_unless(PermissionHelper::isSuperadmin(), 403, 'Hanya superadmin yang dapat melihat daftar user.');
+
         if ($request->ajax()) {
             $columns = ['name', 'nik', 'username', 'status_karyawan', 'created_at'];
 

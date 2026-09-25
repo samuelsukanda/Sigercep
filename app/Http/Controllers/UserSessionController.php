@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
 use Carbon\Carbon;
@@ -10,6 +11,8 @@ class UserSessionController extends Controller
 {
     public function index()
     {
+        abort_unless(PermissionHelper::isSuperadmin(), 403, 'Hanya superadmin yang dapat melihat monitoring user.');
+
         $sessions = DB::table('sessions')
             ->leftJoin('users', 'sessions.user_id', '=', 'users.id')
             ->select(

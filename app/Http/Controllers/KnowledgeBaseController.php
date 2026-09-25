@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PermissionHelper;
 use App\Models\KnowledgeBase;
 
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class KnowledgeBaseController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+        $isIT = PermissionHelper::canAccess('knowledge_base', 'update');
         
         $tab = $request->get('tab', 'published');
         $query = KnowledgeBase::with(['author']);
@@ -100,7 +101,7 @@ class KnowledgeBaseController extends Controller
     {
         if ($knowledgeBase->status === 'draft') {
             $user = auth()->user();
-            $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+            $isIT = PermissionHelper::canAccess('knowledge_base', 'update');
             if (!$isIT && $knowledgeBase->author_id !== $user->id) {
                 abort(403, 'Artikel ini belum dipublikasikan.');
             }
@@ -120,7 +121,7 @@ class KnowledgeBaseController extends Controller
     public function edit(KnowledgeBase $knowledgeBase)
     {
         $user = auth()->user();
-        $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+        $isIT = PermissionHelper::canAccess('knowledge_base', 'update');
         if (!$isIT && $knowledgeBase->author_id !== $user->id) {
             abort(403);
         }
@@ -132,7 +133,7 @@ class KnowledgeBaseController extends Controller
     public function update(Request $request, KnowledgeBase $knowledgeBase)
     {
         $user = auth()->user();
-        $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+        $isIT = PermissionHelper::canAccess('knowledge_base', 'update');
         if (!$isIT && $knowledgeBase->author_id !== $user->id) {
             abort(403);
         }
@@ -173,7 +174,7 @@ class KnowledgeBaseController extends Controller
     public function destroy(KnowledgeBase $knowledgeBase)
     {
         $user = auth()->user();
-        $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+        $isIT = PermissionHelper::canAccess('knowledge_base', 'update');
         if (!$isIT && $knowledgeBase->author_id !== $user->id) {
             abort(403);
         }
@@ -194,7 +195,7 @@ class KnowledgeBaseController extends Controller
     public function publish(KnowledgeBase $knowledgeBase)
     {
         $user = auth()->user();
-        $isIT = $user->unit && strtolower($user->unit) == 'teknologi dan informasi';
+        $isIT = PermissionHelper::canAccess('knowledge_base', 'update');
         if (!$isIT && $knowledgeBase->author_id !== $user->id) {
             abort(403);
         }

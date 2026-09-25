@@ -48,6 +48,45 @@
     var activeTab = "list";
     var ruleCounter = 1;
 
+    /* Menu yang rule-nya per-akun: hanya name/email, tanpa unit & jabatan. */
+    var EMAIL_ONLY_MENUS = [
+        "helpdesk", "reports", "knowledge_base", "hardware", "toner",
+        "visitasi", "peminjaman", "dokumen_it", "change_request",
+        "permissions", "*",
+    ];
+
+    function usesEmailOnly(menu) {
+        return EMAIL_ONLY_MENUS.indexOf(menu) !== -1;
+    }
+
+    function findUserByUsername(email) {
+        var key = String(email || "").toLowerCase();
+        return usersData.find(function (u) {
+            return String(u.username || "").toLowerCase() === key;
+        });
+    }
+
+    /* Rule email -> nama user dari kolom name. */
+    function resolveRuleUser(value) {
+        if (!value) return null;
+        var raw = String(value);
+        if (raw.indexOf("@") !== -1) {
+            var byEmail = findUserByUsername(raw);
+            if (byEmail) return byEmail;
+            var local = raw.split("@")[0];
+            var byLocal = usersData.find(function (u) {
+                return normalizeKey(u.name) === normalizeKey(local);
+            });
+            return byLocal || { name: local, username: raw };
+        }
+        var key = normalizeKey(raw);
+        return (
+            usersData.find(function (u) {
+                return normalizeKey(u.name) === key;
+            }) || { name: raw, username: "" }
+        );
+    }
+
     /* ───── MODAL Tambah Permission ───── */
     window.openPermModal = function (menu, action) {
         var menuSel = document.getElementById("inp-menu");
@@ -157,28 +196,36 @@
         container.innerHTML = rules
             .map(function (r) {
                 var parts = [];
+                var formattedName;
+                var icon;
+                var user = resolveRuleUser(r.name);
 
-                if (r.unit)
-                    parts.push(
-                        '<span class="rule-meta-chip"><i class="fas fa-building"></i>' +
-                            esc(r.unit.toUpperCase()) +
-                            "</span>",
-                    );
+                if (usesEmailOnly(activePerm ? activePerm.menu : "")) {
+                    formattedName = user ? formatUserName(user.name) : "";
+                    icon = "fa-user";
+                } else {
+                    if (r.unit)
+                        parts.push(
+                            '<span class="rule-meta-chip"><i class="fas fa-building"></i>' +
+                                esc(r.unit.toUpperCase()) +
+                                "</span>",
+                        );
 
-                if (r.jabatan)
-                    parts.push(
-                        '<span class="rule-meta-chip"><i class="fas fa-user-tie"></i>' +
-                            esc(r.jabatan.toUpperCase()) +
-                            "</span>",
-                    );
+                    if (r.jabatan)
+                        parts.push(
+                            '<span class="rule-meta-chip"><i class="fas fa-user-tie"></i>' +
+                                esc(r.jabatan.toUpperCase()) +
+                                "</span>",
+                        );
 
-                var icon = r.unit
-                    ? "fa-building"
-                    : r.jabatan
-                    ? "fa-user-tie"
-                    : "fa-user";
+                    icon = r.unit
+                        ? "fa-building"
+                        : r.jabatan
+                        ? "fa-user-tie"
+                        : "fa-user";
 
-                var formattedName = r.name ? formatUserName(r.name) : "";
+                    formattedName = r.name ? formatUserName(r.name) : "";
+                }
 
                 var nameRow = formattedName
                     ? '<div class="rule-name-main"><i class="fas fa-user" style="font-size:10px;margin-right:3px;color:var(--muted)"></i>' +
@@ -251,7 +298,9 @@
     /* ───── MODAL EDIT RULE ───── */
     window.openEditRuleModal = function (ruleId, name, unit, jabatan) {
         document.getElementById("editRuleId").value = ruleId;
-        document.getElementById("edit-name").value = formatUserName(name || "");
+        // Email ditampilkan apa adanya, bukan diformat jadi.title case
+        document.getElementById("edit-name").value =
+            name && name.indexOf("@") !== -1 ? name : formatUserName(name || "");
         document.getElementById("edit-unit").value = formatUserName(unit || "");
         document.getElementById("edit-jabatan").value =
             formatUserName(jabatan || "");
@@ -437,9 +486,23 @@
         var user = usersData.find(function (u) {
             return String(u.id) === String(sel.value);
         });
-        document.getElementById("pf-name").value = user ? user.name : "";
-        document.getElementById("pf-unit").value = user ? user.unit : "";
-        document.getElementById("pf-jabatan").value = user ? user.jabatan : "";
+        var emailOnly = usesEmailOnly(activePerm ? activePerm.menu : "");
+
+        document.getElementById("pf-name").value = user
+            ? emailOnly
+                ? user.username
+                : user.name
+            : "";
+        document.getElementById("pf-unit").value = emailOnly
+            ? ""
+            : user
+            ? user.unit
+            : "";
+        document.getElementById("pf-jabatan").value = emailOnly
+            ? ""
+            : user
+            ? user.jabatan
+            : "";
     }
 
     function initAddRuleUserSelect() {
@@ -471,9 +534,19 @@
             var user = usersData.find(function (u) {
                 return String(u.id) === String(val);
             });
-            row.find('input[name$="[name]"]').val(user ? user.name : "");
-            row.find('input[name$="[unit]"]').val(user ? user.unit : "");
-            row.find('input[name$="[jabatan]"]').val(user ? user.jabatan : "");
+            var menuSel = document.getElementById("inp-menu");
+            var emailOnly =
+                menuSel && usesEmailOnly(menuSel.value);
+
+            row.find('input[name$="[name]"]').val(
+                user ? (emailOnly ? user.username : user.name) : "",
+            );
+            row.find('input[name$="[unit]"]').val(
+                emailOnly ? "" : user ? user.unit : "",
+            );
+            row.find('input[name$="[jabatan]"]').val(
+                emailOnly ? "" : user ? user.jabatan : "",
+            );
         });
     };
 
@@ -536,6 +609,18 @@
         document
             .querySelectorAll(".rule-user-select")
             .forEach(initRuleUserSelect);
+
+        // Ganti menu -> isi ulang rule agar unit/jabatan ikut menyesuaikan
+        window
+            .jQuery("#inp-menu")
+            .on("change", function () {
+                document.querySelectorAll("[data-rule-row]").forEach(function (row) {
+                    var sel = row.querySelector(".rule-user-select");
+                    if (sel && sel.value) {
+                        window.jQuery(sel).trigger("change");
+                    }
+                });
+            });
 
         // Guard duplikat menu+action sebelum simpan
         document

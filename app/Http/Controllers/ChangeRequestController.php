@@ -24,8 +24,7 @@ class ChangeRequestController extends Controller
 
     private function isIT()
     {
-        $user = Auth::user();
-        return $user && strtolower(trim($user->unit ?? '')) == 'teknologi dan informasi';
+        return PermissionHelper::isIt(Auth::user());
     }
 
     /* Manajer (jabatan mengandung kata "manajer") diberi akses penuh CRUD, termasuk Manajer Umum. */

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PermissionHelper;
 use App\Models\ApprovalMapping;
 use App\Models\User;
 use App\Models\Setting;
@@ -16,14 +17,7 @@ class ApprovalMappingController extends Controller
             abort(403, 'Hanya user IT yang dapat mengakses panel ini.');
         }
 
-        $name = strtolower(trim($user->name ?? ''));
-        $unit = strtolower(trim($user->unit ?? ''));
-        $jabatan = strtolower(trim($user->jabatan ?? ''));
-
-        $isSammuel = ($name === 'sammuel' && $unit === 'teknologi dan informasi' && $jabatan === 'operasional it technical support');
-        $isDeden = ($name === 'deden eka nugraha' && $unit === 'teknologi dan informasi' && $jabatan === 'spv it');
-
-        if (!$isSammuel && !$isDeden) {
+        if (!PermissionHelper::canManageApprovalMapping($user)) {
             abort(403, 'Hanya user IT yang berwenang yang dapat mengakses panel ini.');
         }
     }

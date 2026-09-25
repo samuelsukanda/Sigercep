@@ -33,7 +33,7 @@
                         </button>
 
                         <!-- Button Reset -->
-                        <a href="{{ route('reports.summary') }}"
+                        <a href="{{ route('helpdesk.index') }}"
                             class="btn-reset mr-1 inline-flex items-center justify-center
                             h-9 px-4 text-xs font-semibold text-slate-700 uppercase
                             rounded-lg shadow-md bg-gray-200 hover:shadow-sm active:opacity-85 transition-all">

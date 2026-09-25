@@ -17,21 +17,16 @@ class PermissionSeeder extends Seeder
         Permission::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // HELPER SUPERADMIN RULE
-        $superRules = [
-            ['unit' => 'teknologi dan informasi', 'jabatan' => 'operasional it technical support', 'name' => 'sammuel'],
-            ['unit' => 'teknologi dan informasi', 'jabatan' => 'operasional it technical support', 'name' => 'raden.ibnu'],
-            ['unit' => 'teknologi dan informasi', 'jabatan' => 'it infrastruktur', 'name' => 'iyan.hermawan'],
-            ['unit' => 'teknologi dan informasi', 'jabatan' => 'pengembangan sistem', 'name' => 'novit.adriansyah'],
-            ['unit' => 'teknologi dan informasi', 'jabatan' => 'spv it', 'name' => 'deden eka nugraha'],
-        ];
+        // Akses berbasis akun (email), sumber tunggal: config/it_access.php
+        $itAdminRules = array_map(fn ($email) => ['name' => $email], config('it_access.it'));
+        $superadminRules = array_map(fn ($email) => ['name' => $email], config('it_access.superadmin'));
 
-        // SUPERADMIN (FULL AKSES)
+        // SUPERADMIN (FULL AKSES) - hanya sammuel
         $super = Permission::create([
             'menu' => '*',
             'action' => '*'
         ]);
-        $super->rules()->createMany($superRules);
+        $super->rules()->createMany($superadminRules);
 
         // DAFTAR SEMUA MENU
         $allMenus = [
@@ -93,25 +88,29 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
-        // ADMIN HELP DESK (IT) - FULL AKSES
+        // ADMIN HELP DESK - FULL AKSES KHUSUS 5 AKUN IT (create/read untuk semua user sudah di atas)
         $fullActions = ['create', 'read', 'update', 'delete'];
 
-        foreach ($fullActions as $action) {
+        foreach (['update', 'delete', 'manage'] as $action) {
             Permission::create([
                 'menu' => 'helpdesk',
                 'action' => $action
-            ])->rules()->create([
-                'unit' => 'teknologi dan informasi'
-            ]);
+            ])->rules()->createMany($itAdminRules);
         }
 
-        // REPORT - READ ONLY UNTUK UNIT IT
+        // KNOWLEDGE BASE - KELOLA DRAFT & ARTIKEL MILIK ORANG LAIN (5 AKUN IT)
+        foreach ($fullActions as $action) {
+            Permission::create([
+                'menu' => 'knowledge_base',
+                'action' => $action
+            ])->rules()->createMany($itAdminRules);
+        }
+
+        // REPORT - READ ONLY UNTUK 5 AKUN IT
         Permission::create([
             'menu' => 'reports',
             'action' => 'read'
-        ])->rules()->create([
-            'unit' => 'teknologi dan informasi'
-        ]);
+        ])->rules()->createMany($itAdminRules);
 
         // MUTU - FULL AKSES UNTUK MENU TERTENTU
         $mutuMenus = [
@@ -187,15 +186,11 @@ class PermissionSeeder extends Seeder
                 'action' => $action
             ]);
 
-            $permission->rules()->create([
-                'unit' => 'teknologi dan informasi',
-                'jabatan' => 'operasional it technical support',
-                'name' => 'sammuel'
-            ]);
+            $permission->rules()->createMany($superadminRules);
         }
 
-        // SUPERADMIN ONLY MENU (HANYA SUPERADMIN YANG BISA)
-        $superOnlyMenus = ['toner', 'visitasi', 'hardware', 'peminjaman', 'dokumen_it'];
+        // MENU KHUSUS TIM IT (5 akun)
+        $superOnlyMenus = ['toner', 'visitasi', 'peminjaman', 'dokumen_it', 'hardware'];
 
         foreach ($superOnlyMenus as $menu) {
             foreach ($fullActions as $action) {
@@ -203,21 +198,17 @@ class PermissionSeeder extends Seeder
                     'menu' => $menu,
                     'action' => $action
                 ]);
-                $permission->rules()->createMany($superRules);
+                $permission->rules()->createMany($itAdminRules);
             }
         }
 
-        // CHANGE REQUEST - FULL AKSES HANYA UNIT IT (manager hanya lihat, requester via approval mapping)
-        $changeRequestRules = [
-            ['unit' => 'teknologi dan informasi'],
-        ];
-
+        // CHANGE REQUEST - FULL AKSES 5 AKUN IT (manager hanya lihat, requester via approval mapping)
         foreach ($fullActions as $action) {
             $permission = Permission::create([
                 'menu' => 'change_request',
                 'action' => $action
             ]);
-            $permission->rules()->createMany($changeRequestRules);
+            $permission->rules()->createMany($itAdminRules);
         }
     }
 }

@@ -144,21 +144,7 @@
 
                 {{-- Approval Change Request --}}
                 @php
-                    $navUser = Auth::user();
-                    $canAccessApprovalMapping = false;
-
-                    if ($navUser) {
-                        $nName = strtolower(trim($navUser->name ?? ''));
-                        $nUnit = strtolower(trim($navUser->unit ?? ''));
-                        $nJabatan = strtolower(trim($navUser->jabatan ?? ''));
-
-                        if (
-                            ($nName == 'sammuel' && $nUnit == 'teknologi dan informasi' && $nJabatan == 'operasional it technical support') ||
-                            ($nName == 'deden eka nugraha' && $nUnit == 'teknologi dan informasi' && $nJabatan == 'spv it')
-                        ) {
-                            $canAccessApprovalMapping = true;
-                        }
-                    }
+                    $canAccessApprovalMapping = \App\Helpers\PermissionHelper::canManageApprovalMapping(Auth::user());
                 @endphp
 
                 @if ($canAccessApprovalMapping)
@@ -194,22 +180,7 @@
 
                 {{-- Permissions --}}
                 @php
-                    $user = Auth::user();
-                    $canAccessPermissions = false;
-
-                    if ($user) {
-                        $name = strtolower(trim($user->name ?? ''));
-                        $unit = strtolower(trim($user->unit ?? ''));
-                        $jabatan = strtolower(trim($user->jabatan ?? ''));
-
-                        if (
-                            $name == 'sammuel' &&
-                            $unit == 'teknologi dan informasi' &&
-                            $jabatan == 'operasional it technical support'
-                        ) {
-                            $canAccessPermissions = true;
-                        }
-                    }
+                    $canAccessPermissions = \App\Helpers\PermissionHelper::isSuperadmin(Auth::user());
                 @endphp
 
                 @if ($canAccessPermissions)
@@ -359,4 +330,3 @@
     </div>
 </nav>
 <!-- end Navbar -->
-

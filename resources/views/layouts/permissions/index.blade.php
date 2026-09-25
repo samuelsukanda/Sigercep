@@ -510,7 +510,7 @@
                         <input type="hidden" name="unit" id="pf-unit">
                         <input type="hidden" name="jabatan" id="pf-jabatan">
                         <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Rule otomatis terisi dari user
-                            yang dipilih (nama, unit, jabatan).</div>
+                            yang dipilih. Untuk menu IT, rule memakai nama/email user saja (unit &amp; jabatan dikosongkan).</div>
                     </div>
 
                     <div
@@ -1037,10 +1037,11 @@
     {{-- Embed data users untuk dropdown rule --}}
     <script id="usersData" type="application/json">
     {!! json_encode($users->map(fn($u) => [
-        'id'      => $u->id,
-        'name'    => $u->name,
-        'unit'    => $u->unit    ?? '',
-        'jabatan' => $u->jabatan ?? '',
+        'id'       => $u->id,
+        'name'     => $u->name,
+        'username' => $u->username ?? '',
+        'unit'     => $u->unit    ?? '',
+        'jabatan'  => $u->jabatan ?? '',
     ])->values()) !!}
 </script>
 @endsection
