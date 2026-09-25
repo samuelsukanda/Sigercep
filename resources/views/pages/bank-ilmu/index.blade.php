@@ -22,7 +22,7 @@
                 @include('layouts.partials.bank-ilmu.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.bank-ilmu.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

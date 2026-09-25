@@ -22,7 +22,7 @@
                 @include('layouts.partials.reservasi.ruangan.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.reservasi.ruangan.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

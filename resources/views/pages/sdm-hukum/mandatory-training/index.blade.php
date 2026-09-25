@@ -22,7 +22,7 @@
                 @include('layouts.partials.sdm-hukum.mandatory-training.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.sdm-hukum.mandatory-training.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

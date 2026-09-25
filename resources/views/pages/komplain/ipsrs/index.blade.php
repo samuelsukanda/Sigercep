@@ -22,7 +22,7 @@
                 @include('layouts.partials.komplain.ipsrs.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.komplain.ipsrs.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

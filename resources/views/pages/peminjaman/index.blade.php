@@ -22,7 +22,7 @@
                 @include('layouts.partials.peminjaman.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.peminjaman.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

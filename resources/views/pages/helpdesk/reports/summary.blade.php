@@ -26,7 +26,7 @@
                 @include('layouts.partials.helpdesk.summary.recap')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.helpdesk.summary.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

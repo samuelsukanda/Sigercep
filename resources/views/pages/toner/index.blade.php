@@ -22,7 +22,7 @@
                 @include('layouts.partials.toner.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.toner.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

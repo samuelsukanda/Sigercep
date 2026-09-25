@@ -22,7 +22,7 @@
                 @include('layouts.partials.komite-mutu.laporan-perilaku.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.komite-mutu.laporan-perilaku.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

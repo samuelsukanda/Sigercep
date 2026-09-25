@@ -22,7 +22,7 @@
                 @include('layouts.partials.sdm-hukum.surat-keputusan.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.sdm-hukum.surat-keputusan.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

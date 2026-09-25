@@ -29,7 +29,7 @@
                 @include('layouts.partials.hardware.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.hardware.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

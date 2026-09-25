@@ -22,7 +22,7 @@
                 @include('layouts.partials.change-request.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.change-request.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

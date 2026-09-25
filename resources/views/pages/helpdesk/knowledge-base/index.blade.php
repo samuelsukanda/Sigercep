@@ -23,7 +23,7 @@
                 @include('layouts.partials.knowledge-base.card-grid')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.knowledge-base.loading-overlay')
+                @include('layouts.partials.loading-overlay')
 
             </div>
         </div>

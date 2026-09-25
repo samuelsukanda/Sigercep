@@ -22,7 +22,7 @@
                 @include('layouts.partials.komite-mutu.pelaporan-ikp.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.komite-mutu.pelaporan-ikp.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

@@ -22,7 +22,7 @@
                 @include('layouts.partials.dokumen-it.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.dokumen-it.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

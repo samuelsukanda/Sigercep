@@ -22,7 +22,7 @@
                 @include('layouts.partials.pengadaan-aset.laporan-aset-rusak.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.pengadaan-aset.laporan-aset-rusak.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

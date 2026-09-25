@@ -22,7 +22,7 @@
                 @include('layouts.partials.helpdesk.admin.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.helpdesk.admin.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

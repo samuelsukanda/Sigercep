@@ -22,7 +22,7 @@
                 @include('layouts.partials.komite-medik.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.komite-medik.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

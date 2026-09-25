@@ -22,7 +22,7 @@
                 @include('layouts.partials.desain-grafis.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.desain-grafis.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>

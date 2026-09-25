@@ -147,7 +147,7 @@
         @include('layouts.partials.komite-mutu.manajemen-risiko.datatable')
 
         {{-- Loading Overlay --}}
-        @include('layouts.partials.komite-mutu.manajemen-risiko.loading-overlay')
+        @include('layouts.partials.loading-overlay')
     </div>
 @endsection
 

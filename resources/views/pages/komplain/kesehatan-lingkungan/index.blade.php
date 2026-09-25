@@ -22,7 +22,7 @@
                 @include('layouts.partials.komplain.kesehatan-lingkungan.datatable')
 
                 {{-- Loading Overlay --}}
-                @include('layouts.partials.komplain.kesehatan-lingkungan.loading-overlay')
+                @include('layouts.partials.loading-overlay')
             </div>
         </div>
     </div>
