@@ -36,30 +36,7 @@
 
         // Filter
         document.addEventListener("DOMContentLoaded", function() {
-            var dari = flatpickr("input[name='periode_dari']", {
-                dateFormat: "d-m-Y",
-                allowInput: false,
-                onChange: function(selectedDates, dateStr, instance) {
-                    sampai.set("minDate", dateStr);
-                },
-            });
-
-            var sampai = flatpickr("input[name='periode_sampai']", {
-                dateFormat: "d-m-Y",
-                allowInput: false,
-                onChange: function(selectedDates, dateStr, instance) {
-                    dari.set("maxDate", dateStr);
-                },
-            });
-
-            const dariValue = "{{ request('periode_dari') }}";
-            const sampaiValue = "{{ request('periode_sampai') }}";
-
-            if (dariValue) dari.setDate(dariValue);
-            if (sampaiValue) sampai.setDate(sampaiValue);
-            if (dariValue && sampaiValue) {
-                sampai.set("minDate", dariValue);
-                dari.set("maxDate", sampaiValue);
+            initDateRange("{{ request('periode_dari') }}", "{{ request('periode_sampai') }}");
             }
         });
     </script>

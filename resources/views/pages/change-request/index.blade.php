@@ -46,29 +46,7 @@
                 });
             }
 
-            var dari = flatpickr("input[name='periode_dari']", {
-                dateFormat: "d-m-Y",
-                allowInput: false,
-                onChange: function(selectedDates, dateStr, instance) {
-                    sampai.set("minDate", dateStr);
-                },
-            });
-
-            var sampai = flatpickr("input[name='periode_sampai']", {
-                dateFormat: "d-m-Y",
-                allowInput: false,
-                onChange: function(selectedDates, dateStr, instance) {
-                    dari.set("maxDate", dateStr);
-                },
-            });
-
-            const dariValue = "{{ request('periode_dari') }}";
-            const sampaiValue = "{{ request('periode_sampai', now()->format('d-m-Y')) }}";
-
-            if (dariValue) dari.setDate(dariValue);
-            sampai.setDate(sampaiValue);
-            if (dariValue) sampai.set("minDate", dariValue);
-            dari.set("maxDate", sampaiValue);
+            initDateRange("{{ request('periode_dari') }}", "{{ request('periode_sampai', now()->format('d-m-Y')) }}");
         });
     </script>
 @endpush
