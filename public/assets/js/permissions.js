@@ -196,36 +196,33 @@
         container.innerHTML = rules
             .map(function (r) {
                 var parts = [];
-                var formattedName;
-                var icon;
+
+                if (r.unit)
+                    parts.push(
+                        '<span class="rule-meta-chip"><i class="fas fa-building"></i>' +
+                            esc(r.unit.toUpperCase()) +
+                            "</span>",
+                    );
+
+                if (r.jabatan)
+                    parts.push(
+                        '<span class="rule-meta-chip"><i class="fas fa-briefcase"></i>' +
+                            esc(r.jabatan.toUpperCase()) +
+                            "</span>",
+                    );
+
+                var hasName = !!r.name;
+                var icon = r.unit
+                    ? "fa-building"
+                    : r.jabatan
+                    ? "fa-briefcase"
+                    : hasName
+                    ? "fa-user"
+                    : "fa-globe";
+
+                // name bisa berisi email (rule menu IT) -> tampilkan nama aslinya
                 var user = resolveRuleUser(r.name);
-
-                if (usesEmailOnly(activePerm ? activePerm.menu : "")) {
-                    formattedName = user ? formatUserName(user.name) : "";
-                    icon = "fa-user";
-                } else {
-                    if (r.unit)
-                        parts.push(
-                            '<span class="rule-meta-chip"><i class="fas fa-building"></i>' +
-                                esc(r.unit.toUpperCase()) +
-                                "</span>",
-                        );
-
-                    if (r.jabatan)
-                        parts.push(
-                            '<span class="rule-meta-chip"><i class="fas fa-user-tie"></i>' +
-                                esc(r.jabatan.toUpperCase()) +
-                                "</span>",
-                        );
-
-                    icon = r.unit
-                        ? "fa-building"
-                        : r.jabatan
-                        ? "fa-user-tie"
-                        : "fa-user";
-
-                    formattedName = r.name ? formatUserName(r.name) : "";
-                }
+                var formattedName = user ? formatUserName(user.name) : "";
 
                 var nameRow = formattedName
                     ? '<div class="rule-name-main"><i class="fas fa-user" style="font-size:10px;margin-right:3px;color:var(--muted)"></i>' +
@@ -253,7 +250,7 @@
                         : "") +
                     nameRow +
                     (!parts.length && !r.name
-                        ? '<span style="font-size:.72rem;color:var(--hint);font-style:italic">Rule tanpa detail</span>'
+                        ? '<span style="font-size:.72rem;color:var(--hint);font-style:italic">Semua user (public)</span>'
                         : "") +
                     "</div>" +
                     // Tombol aksi — edit & delete
