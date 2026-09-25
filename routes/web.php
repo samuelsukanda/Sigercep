@@ -61,8 +61,7 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])
-    ->middleware();
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
@@ -101,10 +100,6 @@ Route::middleware('auth')->group(function () {
         // User Monitoring
         Route::get('/user-monitoring', [UserSessionController::class, 'index'])
             ->name('user.monitoring');
-
-        Route::get('/user-monitoring-data', [UserSessionController::class, 'data'])
-            ->middleware('auth')
-            ->name('user.monitoring.data');
 
         // List User
         Route::get('/users', [UserController::class, 'index'])

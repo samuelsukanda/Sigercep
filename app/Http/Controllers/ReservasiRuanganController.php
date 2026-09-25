@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\ReservasiRuangan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 use App\Helpers\PermissionHelper;
 
 class ReservasiRuanganController extends Controller

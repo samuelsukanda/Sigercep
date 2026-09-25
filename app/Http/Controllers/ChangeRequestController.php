@@ -14,14 +14,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
+/* Akses baca/buat mengikuti aturan jabatan (IT, peminta, approver) via PermissionHelper::canManageChangeRequest.
+   Edit/hapus diverifikasi per-record di method (pemilik atau IT). */
 class ChangeRequestController extends Controller
 {
-    public function __construct()
-    {
-        // Akses baca/buat mengikuti aturan jabatan (IT, peminta, approver) via PermissionHelper::canManageChangeRequest.
-        // Edit/hapus diverifikasi per-record di method (pemilik atau IT).
-    }
-
     private function isIT()
     {
         return PermissionHelper::isIt(Auth::user());
@@ -251,8 +247,6 @@ class ChangeRequestController extends Controller
             $canDelete = PermissionHelper::canAccess('change_request', 'delete');
 
             $data = [];
-            $isManager = $this->isManager();
-            $isStage2 = $this->isStage2User($user);
             foreach ($records as $item) {
                 $isOwner = $item->user_id === $user->id;
                 $wasApprover = ($item->approval_1_by ?? '') === $user->name || ($item->approval_2_by ?? '') === $user->name;
@@ -555,7 +549,6 @@ class ChangeRequestController extends Controller
         $changeRequest = ChangeRequest::findOrFail($id);
         $user = Auth::user();
         $isIT = $this->isIT();
-        $isManager = $this->isManager();
         $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && $changeRequest->approval_1_status !== 'Disetujui';
 
         if (!$isIT && !$isOwner) {
@@ -570,7 +563,6 @@ class ChangeRequestController extends Controller
         $changeRequest = ChangeRequest::findOrFail($id);
         $user = Auth::user();
         $isIT = $this->isIT();
-        $isManager = $this->isManager();
         $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && $changeRequest->approval_1_status !== 'Disetujui';
 
         if (!$isIT && !$isOwner) {
@@ -658,7 +650,6 @@ class ChangeRequestController extends Controller
         $changeRequest = ChangeRequest::findOrFail($id);
         $user = Auth::user();
         $isIT = $this->isIT();
-        $isManager = $this->isManager();
         $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && $changeRequest->approval_1_status !== 'Disetujui';
 
         if (!$isIT && !$isOwner) {

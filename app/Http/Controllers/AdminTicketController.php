@@ -9,7 +9,6 @@ use App\Models\TicketUpdate;
 use App\Notifications\TicketApprovalNotification;
 use App\Notifications\TicketStatusUpdatedNotification;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
 class AdminTicketController extends Controller

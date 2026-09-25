@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\KomplainIpsrs;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use App\Helpers\PermissionHelper;
 
 class KomplainIpsrsController extends Controller

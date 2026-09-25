@@ -6,7 +6,6 @@ use App\Models\BankIlmu;
 use App\Helpers\PermissionHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
 class BankIlmuController extends Controller

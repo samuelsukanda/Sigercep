@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Indicator extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'pj',
@@ -24,10 +22,5 @@ class Indicator extends Model
     public function values()
     {
         return $this->hasMany(IndicatorValue::class);
-    }
-
-    public function getTarget($tahun)
-    {
-        return $this->targets->where('tahun', $tahun)->first()->target_value ?? null;
     }
 }

@@ -115,7 +115,6 @@ class ReportController extends Controller
             : now()->endOfMonth();
 
         $query = Ticket::with(['user', 'approval'])->filter($request);
-        $tickets = $isFiltered ? $query->get() : collect();
 
         if ($request->filled('kategori')) {
             $query->where('category', $request->kategori);
@@ -145,7 +144,7 @@ class ReportController extends Controller
         $totalOpen = $tickets->where('status', 'Open')->count();
         $totalInProgress = $tickets->where('status', 'In Progress')->count();
         $totalClosed = $tickets->where('status', 'Closed')->count();
-        $totalDone = $totalDone = $tickets->where('status', 'Done')->count();
+        $totalDone = $tickets->where('status', 'Done')->count();
 
         // Rata-rata waktu penyelesaian (berdasarkan resolved_at)
         $avgResolution = Ticket::where('status', 'Done')

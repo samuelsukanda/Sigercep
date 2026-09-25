@@ -9,7 +9,6 @@ use App\Models\MasterMiniPc;
 use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class HardwareController extends Controller
 {

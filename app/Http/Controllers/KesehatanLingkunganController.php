@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\KesehatanLingkungan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use App\Helpers\PermissionHelper;
 
 class KesehatanLingkunganController extends Controller
