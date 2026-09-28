@@ -4,7 +4,7 @@
             <tr>
                 <th class="px-6 py-3">No</th>
                 <th class="px-6 py-3">No Tiket</th>
-                <th class="px-6 py-3">Nama</th>
+                <th class="px-6 py-3">Nama Pemohon</th>
                 <th class="px-6 py-3">Tanggal Permintaan</th>
                 <th class="px-6 py-3">Permintaan Fitur</th>
                 <th class="px-6 py-3">Deskripsi</th>

@@ -12,9 +12,9 @@
                     </div>
                     <div class="flex-auto p-6">
                         <div class="flex flex-wrap -mx-3">
-                            {{-- Nama --}}
+                            {{-- Nama Pemohon --}}
                             <div class="w-full md:w-1/2 xl:w-1/3 px-3">
-                                <label class="block mb-1 text-sm font-semibold text-slate-700">Nama</label>
+                                <label class="block mb-1 text-sm font-semibold text-slate-700">Nama Pemohon</label>
                                 <p class="text-slate-600">{{ ucwords(str_replace('.', ' ', $changeRequest->nama)) }}</p>
                             </div>
 

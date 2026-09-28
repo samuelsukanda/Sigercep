@@ -18,9 +18,9 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                                {{-- Nama (read only) --}}
+                                {{-- Nama Pemohon (read only) --}}
                                 <div>
-                                    <label class="block text-sm font-semibold mb-1 text-slate-700">Nama</label>
+                                    <label class="block text-sm font-semibold mb-1 text-slate-700">Nama Pemohon</label>
                                     <input type="text"
                                         class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-200 text-slate-700 text-sm"
                                         value="{{ ucwords(str_replace('.', ' ', $changeRequest->nama)) }}" disabled>
