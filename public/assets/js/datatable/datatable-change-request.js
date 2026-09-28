@@ -40,6 +40,13 @@ let table = $("#changeRequestTable").DataTable({
             },
         },
         {
+            // Nama Peminta
+            data: "nama",
+            render: function (data) {
+                return data || "-";
+            },
+        },
+        {
             // Tanggal Permintaan
             data: "tanggal_formatted",
             render: function (data, type, row) {
