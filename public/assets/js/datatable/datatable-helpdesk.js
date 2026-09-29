@@ -1,7 +1,5 @@
 // public/assets/js/datatable-helpdesk.js
-let table = $("#ticketTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#ticketTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -111,9 +109,6 @@ let table = $("#ticketTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

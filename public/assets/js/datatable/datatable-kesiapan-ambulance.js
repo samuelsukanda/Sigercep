@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-kesiapan-ambulance.js
-let table = $("#kesiapanAmbulanceTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#kesiapanAmbulanceTable", {
         responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -120,9 +118,6 @@ let table = $("#kesiapanAmbulanceTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[1, "desc"]],
 });

@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-change-request.js
-let table = $("#changeRequestTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#changeRequestTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -174,9 +172,6 @@ let table = $("#changeRequestTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[1, "desc"]],
 });

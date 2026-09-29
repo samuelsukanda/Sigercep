@@ -10,8 +10,6 @@ $(document).ready(function () {
     ].some((name) => params.has(name) && params.get(name) !== "");
 
     const tableOptions = {
-        processing: true,
-        serverSide: true,
         ajax: {
             url: window.location.href,
             type: "GET",
@@ -93,11 +91,6 @@ $(document).ready(function () {
             { data: "resolved_at" },
         ],
 
-        initComplete: function () {
-            $(this.api().table().container()).addClass(
-                "datatable-custom-wrapper",
-            );
-        },
 
         order: [[1, "desc"]],
     };
@@ -106,5 +99,5 @@ $(document).ready(function () {
         tableOptions.deferLoading = 0;
     }
 
-    $("#ticketTable").DataTable(tableOptions);
+    SigTable("#ticketTable", tableOptions);
 });

@@ -1,7 +1,5 @@
 // public/assets/js/datatable-reservasi-kendaraan.js
-let table = $("#reservasiTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#reservasiTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -107,9 +105,6 @@ let table = $("#reservasiTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[4, "desc"]],
 });

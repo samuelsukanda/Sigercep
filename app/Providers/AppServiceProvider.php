@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\DynamicComponent;
 use App\Helpers\PermissionHelper;
+use App\Support\VersionedAssetUrlGenerator;
 use App\Compilers\ResilientBladeCompiler;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +14,16 @@ class AppServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+        // Aset lokal di folder assets/ selalu membawa ?v=<mtime> supaya user
+        // tidak perlu hard refresh setelah deploy.
+        $this->app->extend('url', function ($url, $app) {
+            return new VersionedAssetUrlGenerator(
+                $app['router']->getRoutes(),
+                $url->getRequest(),
+                $app['config']['app.asset_url']
+            );
+        });
+
         $this->app->singleton('blade.compiler', function ($app) {
             return tap(new ResilientBladeCompiler(
                 $app['files'],

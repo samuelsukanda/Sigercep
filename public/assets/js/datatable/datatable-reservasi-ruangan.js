@@ -1,7 +1,5 @@
 // public/assets/js/datatable-reservasi-ruangan.js
-let table = $("#reservasiRuanganTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#reservasiRuanganTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -107,9 +105,6 @@ let table = $("#reservasiRuanganTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[4, "desc"]],
 });

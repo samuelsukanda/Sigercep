@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-mutu.js
-let table = $("#mutuTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#mutuTable", {
     responsive: true,
     pageLength: 10,
     lengthMenu: [
@@ -100,7 +98,4 @@ let table = $("#mutuTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 });

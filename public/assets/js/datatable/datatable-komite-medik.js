@@ -1,8 +1,6 @@
 // public/assets/js/datatable/datatable-komite-medik.js
 $(document).ready(function () {
-    $("#komiteMedikTable").DataTable({
-        processing: true,
-        serverSide: true,
+    SigTable("#komiteMedikTable", {
         ajax: {
             url: window.location.href,
             type: "GET",
@@ -109,11 +107,6 @@ $(document).ready(function () {
             },
         ],
 
-        initComplete: function () {
-            $(this.api().table().container()).addClass(
-                "datatable-custom-wrapper",
-            );
-        },
 
         order: [[2, "desc"]],
     });

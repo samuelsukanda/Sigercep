@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-pemindahan-aset.js
-let table = $("#pemindahanAsetTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#pemindahanAsetTable", {
         responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -114,9 +112,6 @@ let table = $("#pemindahanAsetTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[4, "desc"]],
 });

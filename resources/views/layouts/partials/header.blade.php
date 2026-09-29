@@ -45,10 +45,10 @@
     <!-- Laravel Toaster -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     {{-- Custom CSS --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     {{-- Theme CSS (redesign overrides) --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
     {{-- Dark theme overrides --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}">
 </head>
 {{-- end Header --}}

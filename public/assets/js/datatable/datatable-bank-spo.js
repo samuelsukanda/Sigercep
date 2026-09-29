@@ -1,7 +1,5 @@
 // public/assets/js/datatable-bank-spo.js
-let table = $("#bankSpoTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#bankSpoTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -105,9 +103,6 @@ let table = $("#bankSpoTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

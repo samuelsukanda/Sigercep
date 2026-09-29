@@ -1,7 +1,5 @@
 // public/assets/js/datatable-outsourcing-vendor.js
-let table = $("#outsourcingTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#outsourcingTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -107,9 +105,6 @@ let table = $("#outsourcingTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[5, "desc"]],
 });

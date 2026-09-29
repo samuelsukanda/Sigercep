@@ -1,8 +1,6 @@
 // public/assets/js/datatable/datatable-toner.js
 $(document).ready(function () {
-    $("#tonerTable").DataTable({
-        processing: true,
-        serverSide: true,
+    SigTable("#tonerTable", {
         ajax: {
             url: window.location.href,
             type: "GET",
@@ -114,11 +112,6 @@ $(document).ready(function () {
             },
         ],
 
-        initComplete: function () {
-            $(this.api().table().container()).addClass(
-                "datatable-custom-wrapper",
-            );
-        },
 
         order: [[4, "desc"]],
     });

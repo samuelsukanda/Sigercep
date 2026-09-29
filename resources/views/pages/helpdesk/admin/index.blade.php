@@ -34,7 +34,6 @@
     <script src="{{ asset('assets/js/datatable/datatable-helpdesk.js') }}"></script>
     <script src="{{ asset('assets/js/loading-filter.js') }}"></script>
     <script>
-        $.fn.dataTable.ext.errMode = "none";
 
         // Filter
         document.addEventListener("DOMContentLoaded", function() {

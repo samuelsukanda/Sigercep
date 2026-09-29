@@ -1,7 +1,5 @@
 // public/assets/js/datatable-hardware.js
-let table = $("#hardwareTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#hardwareTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -88,9 +86,6 @@ let table = $("#hardwareTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

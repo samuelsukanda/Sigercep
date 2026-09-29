@@ -1,7 +1,5 @@
 // public/assets/js/datatable-bank-ilmu.js
-let table = $("#bankIlmuTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#bankIlmuTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -84,9 +82,6 @@ let table = $("#bankIlmuTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[1, "desc"]],
 });

@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-laporan-aset-rusak.js
-let table = $("#laporanAsetRusakTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#laporanAsetRusakTable", {
         responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -119,9 +117,6 @@ let table = $("#laporanAsetRusakTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[5, "desc"]],
 });

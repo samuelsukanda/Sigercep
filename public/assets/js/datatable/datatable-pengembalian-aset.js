@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-pengembalian-aset.js
-let table = $("#pengembalianAsetTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#pengembalianAsetTable", {
         responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -104,9 +102,6 @@ let table = $("#pengembalianAsetTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

@@ -1,8 +1,6 @@
 // public/assets/js/datatable/datatable-pelaporan-ikp.js
 $(document).ready(function () {
-    $("#pelaporanIkpTable").DataTable({
-        processing: true,
-        serverSide: true,
+    SigTable("#pelaporanIkpTable", {
         ajax: {
             url: window.location.href,
             type: "GET",
@@ -121,11 +119,6 @@ $(document).ready(function () {
             },
         ],
 
-        initComplete: function () {
-            $(this.api().table().container()).addClass(
-                "datatable-custom-wrapper",
-            );
-        },
 
         order: [[2, "desc"]],
     });

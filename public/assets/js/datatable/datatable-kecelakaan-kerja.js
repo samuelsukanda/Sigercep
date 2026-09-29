@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-kecelakaan-kerja.js
-let table = $("#kecelakaanKerjaTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#kecelakaanKerjaTable", {
     responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -100,9 +98,6 @@ let table = $("#kecelakaanKerjaTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[4, "desc"]],
 });

@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-laporan-perilaku.js
-let table = $("#laporanPerilakuTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#laporanPerilakuTable", {
     responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -107,9 +105,6 @@ let table = $("#laporanPerilakuTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-peminjaman-aset.js
-let table = $("#peminjamanAsetTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#peminjamanAsetTable", {
         responsive: false,
     pageLength: 10,
     lengthMenu: [
@@ -104,9 +102,6 @@ let table = $("#peminjamanAsetTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

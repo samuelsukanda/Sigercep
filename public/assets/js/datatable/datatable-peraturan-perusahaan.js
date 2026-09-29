@@ -1,8 +1,6 @@
 // public/assets/js/datatable/datatable-peraturan-perusahaan.js
 $(document).ready(function () {
-    $("#peraturanPerusahaanTable").DataTable({
-        processing: true,
-        serverSide: true,
+    SigTable("#peraturanPerusahaanTable", {
         ajax: {
             url: window.location.href,
             type: "GET",
@@ -102,11 +100,6 @@ $(document).ready(function () {
             },
         ],
 
-        initComplete: function () {
-            $(this.api().table().container()).addClass(
-                "datatable-custom-wrapper",
-            );
-        },
 
         order: [[1, "desc"]],
     });

@@ -1,6 +1,6 @@
 {{-- Argon Dashboard JS --}}
 <script src="{{ asset('assets/js/sidenav-burger.js') }}"></script>
-<script src="{{ asset('assets/js/toggle-dropdown.js') }}?v=4"></script>
+<script src="{{ asset('assets/js/toggle-dropdown.js') }}"></script>
 {{-- Jquery --}}
 <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
 {{-- Datatables --}}
@@ -18,6 +18,7 @@
 
 {{-- Custom JS --}}
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="{{ asset('assets/js/datatable-factory.js') }}"></script>
 <script src="{{ asset('assets/js/date-range.js') }}"></script>
 {{-- Theme toggle JS --}}
-<script src="{{ asset('assets/js/theme.js') }}?v=2"></script>
+<script src="{{ asset('assets/js/theme.js') }}"></script>

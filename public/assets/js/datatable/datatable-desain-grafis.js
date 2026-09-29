@@ -1,7 +1,5 @@
 // public/assets/js/datatable/datatable-desain-grafis.js
-let table = $("#desainGrafisTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#desainGrafisTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -95,9 +93,6 @@ let table = $("#desainGrafisTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[4, "desc"]],
 });

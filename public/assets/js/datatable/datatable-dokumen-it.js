@@ -1,7 +1,5 @@
 // public/assets/js/datatable-dokumen-it.js
-let table = $("#dokumenItTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#dokumenItTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -91,9 +89,6 @@ let table = $("#dokumenItTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[2, "desc"]],
 });

@@ -1,7 +1,5 @@
 // public/assets/js/datatable-komplain-ipsrs.js
-let table = $("#komplainTable").DataTable({
-    processing: true,
-    serverSide: true,
+SigTable("#komplainTable", {
     ajax: {
         url: window.location.href,
         type: "GET",
@@ -101,9 +99,6 @@ let table = $("#komplainTable").DataTable({
         },
     ],
 
-    initComplete: function () {
-        $(this.api().table().container()).addClass("datatable-custom-wrapper");
-    },
 
     order: [[3, "desc"]],
 });

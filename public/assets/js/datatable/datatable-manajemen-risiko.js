@@ -19,9 +19,7 @@ $(document).ready(function () {
         return badge + nilaiHtml;
     }
 
-    var table = $("#manajemenRisikoTable").DataTable({
-        processing: true,
-        serverSide: true,
+    var table = SigTable("#manajemenRisikoTable", {
         scrollX: true,
         ajax: {
             url: window.location.href,
@@ -191,11 +189,6 @@ $(document).ready(function () {
             });
         },
 
-        initComplete: function () {
-            $(this.api().table().container()).addClass(
-                "datatable-custom-wrapper",
-            );
-        },
 
         order: [],
     });
