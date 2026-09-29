@@ -19,10 +19,9 @@
     </script>
     <title>@yield('title', 'SIGERCEP')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description"
-        content="Sistem Informasi dan Gangguan Rumah Sakit Rujukan (SIGERCEP) - pengelolaan helpdesk, komplain, aset, dan dokumen." />
+    <meta name="description" content="Sistem Informasi Gerakan Cepat Rumah Sakit (SIGERCEP)" />
     <meta property="og:title" content="SIGERCEP" />
-    <meta property="og:description" content="Sistem Informasi dan Gangguan Rumah Sakit Rujukan" />
+    <meta property="og:description" content="Sistem Informasi Gerakan Cepat Rumah Sakit (SIGERCEP)" />
     <meta property="og:type" content="website" />
     <!-- Fonts and icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +45,7 @@
     <!-- Laravel Toaster -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     {{-- Custom CSS --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v=1">
     {{-- Theme CSS (redesign overrides) --}}
     <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}?v=6">
     {{-- Dark theme overrides --}}
