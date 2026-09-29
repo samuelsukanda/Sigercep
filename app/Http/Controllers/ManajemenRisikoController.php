@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\DaftarRisiko;
 use App\Helpers\PermissionHelper;
 
 class ManajemenRisikoController extends Controller
 {
+    use PaginatesDataTable;
+
     public function __construct()
     {
         $this->middleware('permission:manajemen_risiko,read')->only(['index', 'show']);
@@ -72,18 +75,7 @@ class ManajemenRisikoController extends Controller
             $recordsTotal = DaftarRisiko::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'id';
-                $orderDir = $request->order[0]['dir'] ?? 'asc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('id', 'asc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'id', 'asc');
 
             $canUpdate = PermissionHelper::canAccess('manajemen_risiko', 'update');
             $canRead = PermissionHelper::canAccess('manajemen_risiko', 'read');

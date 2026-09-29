@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\BankSpo;
 use App\Helpers\PermissionHelper;
@@ -11,6 +12,8 @@ use Carbon\Carbon;
 
 class BankSpoController extends Controller
 {
+    use PaginatesDataTable;
+
     public function __construct()
     {
         $this->middleware('permission:bank_spo,read')->only(['index', 'show', 'showFile']);
@@ -65,18 +68,7 @@ class BankSpoController extends Controller
             $recordsTotal = BankSpo::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']];
-                $orderDir = $request->order[0]['dir'];
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'created_at', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('bank_spo', 'update');
             $canRead = PermissionHelper::canAccess('bank_spo', 'read');

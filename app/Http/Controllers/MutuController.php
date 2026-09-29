@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\Mutu;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use App\Helpers\PermissionHelper;
 
 class MutuController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -42,18 +44,7 @@ class MutuController extends Controller
             $recordsTotal = Mutu::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'id';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('id', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'id', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('mutu', 'update');
             $canRead = PermissionHelper::canAccess('mutu', 'read');

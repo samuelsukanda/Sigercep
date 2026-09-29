@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\SuratKeputusan;
 use Illuminate\Support\Facades\Storage;
@@ -10,6 +11,7 @@ use App\Helpers\PermissionHelper;
 
 class SuratKeputusanController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -61,18 +63,7 @@ class SuratKeputusanController extends Controller
             $recordsTotal = SuratKeputusan::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'created_at';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'created_at', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('surat_keputusan', 'update');
             $canRead = PermissionHelper::canAccess('surat_keputusan', 'read');

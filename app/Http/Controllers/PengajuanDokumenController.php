@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\PengajuanDokumen;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +12,7 @@ use App\Helpers\PermissionHelper;
 
 class PengajuanDokumenController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -66,18 +68,7 @@ class PengajuanDokumenController extends Controller
             $recordsTotal = PengajuanDokumen::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'tanggal_pengajuan';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('tanggal_pengajuan', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'tanggal_pengajuan', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('pengajuan_dokumen', 'update');
             $canRead = PermissionHelper::canAccess('pengajuan_dokumen', 'read');

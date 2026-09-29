@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +13,7 @@ use Illuminate\Support\Str;
 
 class ReportController extends Controller
 {
+    use PaginatesDataTable;
 
     public function summary(Request $request)
     {
@@ -44,18 +46,7 @@ class ReportController extends Controller
             $recordsTotal = Ticket::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $orderable[$request->order[0]['column']] ?? 'created_at';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $orderable, 'created_at', 'desc');
 
             $data = [];
 

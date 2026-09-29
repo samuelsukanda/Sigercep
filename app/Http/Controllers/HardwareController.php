@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\Hardware;
 use App\Models\MasterKomputer;
@@ -12,6 +13,8 @@ use Carbon\Carbon;
 
 class HardwareController extends Controller
 {
+    use PaginatesDataTable;
+
     public function __construct()
     {
         $this->middleware('permission:hardware,read')->only(['index', 'show', 'report', 'reportMiniPc', 'showDevicePrinter']);
@@ -58,18 +61,7 @@ class HardwareController extends Controller
             $recordsTotal = Hardware::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']];
-                $orderDir = $request->order[0]['dir'];
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('tanggal', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'tanggal', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('hardware', 'update');
             $canRead = PermissionHelper::canAccess('hardware', 'read');

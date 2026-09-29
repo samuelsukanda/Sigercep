@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\PelaporanIkp;
 use Carbon\Carbon;
@@ -9,6 +10,7 @@ use App\Helpers\PermissionHelper;
 
 class PelaporanIkpController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -66,18 +68,7 @@ class PelaporanIkpController extends Controller
             $recordsTotal = PelaporanIkp::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'tanggal_kejadian';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('tanggal_kejadian', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'tanggal_kejadian', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('pelaporan_ikp', 'update');
             $canRead = PermissionHelper::canAccess('pelaporan_ikp', 'read');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Models\KecelakaanKerja;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +12,7 @@ use App\Helpers\PermissionHelper;
 
 class KecelakaanKerjaController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -57,18 +59,7 @@ class KecelakaanKerjaController extends Controller
             $recordsTotal = KecelakaanKerja::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'tanggal';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('tanggal', 'desc')->orderBy('jam', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'tanggal', 'desc', ['jam' => 'desc']);
 
             $canUpdate = PermissionHelper::canAccess('kecelakaan_kerja', 'update');
             $canRead = PermissionHelper::canAccess('kecelakaan_kerja', 'read');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use Illuminate\Http\Request;
 use App\Helpers\PermissionHelper;
 use App\Models\User;
@@ -9,6 +10,8 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
+    use PaginatesDataTable;
+
     public function index(Request $request)
     {
         abort_unless(PermissionHelper::isSuperadmin(), 403, 'Hanya superadmin yang dapat melihat daftar user.');
@@ -33,18 +36,7 @@ class UserController extends Controller
             $recordsTotal = User::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'name';
-                $orderDir = $request->order[0]['dir'] ?? 'asc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('name', 'asc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'name', 'asc');
 
             $avatarClasses = [
                 'um-avatar--teal',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use App\Models\DokumenIt;
 use App\Helpers\PermissionHelper;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 
 class DokumenITController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -58,18 +60,7 @@ class DokumenITController extends Controller
             $recordsTotal = DokumenIt::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'created_at';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'created_at', 'desc');
 
             $canUpdate = PermissionHelper::canAccess('dokumen_it', 'update');
             $canRead = PermissionHelper::canAccess('dokumen_it', 'read');

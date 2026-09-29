@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PaginatesDataTable;
 use App\Models\ReservasiRuangan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -9,6 +10,7 @@ use App\Helpers\PermissionHelper;
 
 class ReservasiRuanganController extends Controller
 {
+    use PaginatesDataTable;
 
     public function __construct()
     {
@@ -56,18 +58,7 @@ class ReservasiRuanganController extends Controller
             $recordsTotal = ReservasiRuangan::count();
             $recordsFiltered = $query->count();
 
-            if ($request->has('order')) {
-                $orderColumn = $columns[$request->order[0]['column']] ?? 'tanggal';
-                $orderDir = $request->order[0]['dir'] ?? 'desc';
-                $query->orderBy($orderColumn, $orderDir);
-            } else {
-                $query->orderBy('tanggal', 'desc')->orderBy('jam_mulai', 'asc');
-            }
-
-            $start = $request->start ?? 0;
-            $length = $request->length ?? 10;
-
-            $records = $query->skip($start)->take($length)->get();
+            $records = $this->datatablePage($request, $query, $columns, 'tanggal', 'desc', ['jam_mulai' => 'asc']);
 
             $canUpdate = PermissionHelper::canAccess('reservasi_ruangan', 'update');
             $canRead = PermissionHelper::canAccess('reservasi_ruangan', 'read');
