@@ -5,7 +5,7 @@
     <div class="sidebar-brand-wrap flex items-center">
         <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
             sidenav-close></i>
-        <a class="sidebar-brand px-4 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+        <a class="sidebar-brand px-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
             href="{{ route('dashboard') }}">
             <img src="{{ asset('images/logors.png') }}"
                 class="sidebar-brand-logo inline max-w-full transition-all duration-200 dark:hidden ease-nav-brand"
