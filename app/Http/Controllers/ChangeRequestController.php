@@ -256,7 +256,7 @@ class ChangeRequestController extends Controller
                     'jabatan'               => $item->user->jabatan ?? $item->jabatan ?? '-',
                     'nama'                  => ucwords(str_replace('.', ' ', $item->nama ?? '-')),
                     'permintaan_fitur'      => $item->permintaan_fitur ?? '-',
-                    'deskripsi'             => Str::words((string) ($item->deskripsi ?? '-'), 30),
+                    'deskripsi'             => Str::limit((string) ($item->deskripsi ?? '-'), 30),
                     'status_pengerjaan'     => $item->status_pengerjaan ?? 'Open',
                     'no_tiket'              => $item->no_tiket ?? 'No Tiket',
                     'approval_1_status'     => $item->approval_1_status ?? 'Menunggu',

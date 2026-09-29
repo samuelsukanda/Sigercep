@@ -62,7 +62,7 @@ SigTable("#changeRequestTable", {
             },
         },
         {
-            // Deskripsi (maks 50 kata, dipotong di controller)
+            // Deskripsi (maks 30 karakter, dipotong di controller)
             data: "deskripsi",
             render: function (data) {
                 const text = data || "-";
