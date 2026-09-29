@@ -2,7 +2,7 @@
 <aside
     class="fixed inset-y-0 flex flex-col w-full p-0 my-4 overflow-hidden antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
     aria-expanded="false">
-    <div class="flex items-center py-4">
+    <div class="sidebar-brand-wrap flex items-center">
         <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
             sidenav-close></i>
         <a class="sidebar-brand px-4 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"

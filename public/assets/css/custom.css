@@ -1,6 +1,15 @@
 /* Brand sidebar (logo + SIGERCEP): Utility .text-2xl ke atas tidak ikut
    ter-compile, jadi ukuran font diatur di sini. Blok brand rata kiri, dengan
    jarak atas dan bawah seimbang lewat padding py-4 pada wrapper. */
+/* Jarak atas wrapper disetel di sini, bukan utility Tailwind: untuk menyeimbangkan
+   jarak brand ke menu di bawahnya dibutuhkan nilai di luar utility yang tersedia
+   (pt-7 ke atas tidak ikut ter-compile). Jarak bawah 8px + 1px garis + margin list
+   menghasilkan 27px, jadi atas dipasang 27px agar rata. */
+.sidebar-brand-wrap {
+    padding-top: 27px;
+    padding-bottom: 8px;
+}
+
 .sidebar-brand {
     display: flex;
     align-items: center;
