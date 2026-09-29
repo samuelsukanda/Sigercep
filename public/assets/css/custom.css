@@ -616,3 +616,24 @@
         line-height: 1.3 !important;
     }
 }
+
+/* Utility .gap-* tidak ikut ter-compile (Tailwind di-build sekali tanpa node_modules),
+   sehingga ikon di kolom Aksi datatable menempel. Diperbaiki khusus sel datatable
+   dan diseragamkan: 6px di semua tombol aksi (32 file datatable memakai gap-2). */
+.datatable-custom td .gap-2 {
+    gap: 6px;
+}
+
+/* Kolom Aksi helpdesk: rapat, tidak menyerap sisa lebar tabel.
+   Trik: kolom lain diberi width 100% supaya sisa lebar jatuh ke mereka,
+   kolom Aksi jadi shrink-to-fit. Padding px-6 (24px/sisi) ditipiskan. */
+#ticketTable th:not(:last-child) {
+    width: 100%;
+}
+#ticketTable th:last-child,
+#ticketTable td:last-child {
+    width: 1% !important;
+    white-space: nowrap;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
