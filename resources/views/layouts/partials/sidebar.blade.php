@@ -2,18 +2,19 @@
 <aside
     class="fixed inset-y-0 flex flex-col w-full p-0 my-4 overflow-hidden antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
     aria-expanded="false">
-    <div class="h-19">
+    <div class="flex items-center justify-center h-19">
         <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
             sidenav-close></i>
-        <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+        <a class="sidebar-brand px-4 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
             href="{{ route('dashboard') }}">
             <img src="{{ asset('images/logors.png') }}"
-                class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
+                class="sidebar-brand-logo inline max-w-full transition-all duration-200 dark:hidden ease-nav-brand"
                 alt="main_logo" />
             <img src="{{ asset('images/logors.png') }}"
-                class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
+                class="sidebar-brand-logo hidden max-w-full transition-all duration-200 dark:inline ease-nav-brand"
                 alt="main_logo" />
-            <span class="ml-1 font-3xl font-semibold transition-all duration-200 ease-nav-brand">SIGERCEP</span>
+            <span
+                class="sidebar-brand-name transition-all duration-200 ease-nav-brand">SIGERCEP</span>
         </a>
     </div>
 

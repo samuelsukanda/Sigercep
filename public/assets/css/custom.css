@@ -1,3 +1,25 @@
+/* Brand sidebar (logo + SIGERCEP): Utility .text-2xl ke atas tidak ikut
+   ter-compile, jadi ukuran font diatur di sini. Blok brand dipusatkan di area
+   kosong atas sidebar dan diperbesar supaya memakai lebar yang tersedia. */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-brand-logo {
+    height: 52px;
+    max-height: 52px;
+    width: auto;
+}
+
+.sidebar-brand-name {
+    margin-left: 12px;
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
 /* Select2 Single */
 .select2-container .select2-selection--single {
     height: 2.5rem !important;
