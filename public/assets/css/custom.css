@@ -1,10 +1,10 @@
 /* Brand sidebar (logo + SIGERCEP): Utility .text-2xl ke atas tidak ikut
-   ter-compile, jadi ukuran font diatur di sini. Blok brand dipusatkan di area
-   kosong atas sidebar dan diperbesar supaya memakai lebar yang tersedia. */
+   ter-compile, jadi ukuran font diatur di sini. Blok brand rata kiri, dengan
+   jarak atas dan bawah seimbang lewat padding py-4 pada wrapper. */
 .sidebar-brand {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .sidebar-brand-logo {
