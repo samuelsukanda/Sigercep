@@ -264,6 +264,7 @@ class ChangeRequestController extends Controller
                     'approval_2_status'     => $item->approval_2_status ?? 'Menunggu',
                     'approval_2_by'         => $item->approval_2_by ?? null,
                     'approvable_level'      => $this->approvableLevel($item),
+                    'is_migrasi'            => $item->isMigrasi(),
                     'created_at_timestamp'  => Carbon::parse($item->created_at)->timestamp,
                     'tanggal_formatted'     => '
                     <div class="flex flex-col">

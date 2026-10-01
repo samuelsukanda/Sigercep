@@ -116,8 +116,10 @@ SigTable("#changeRequestTable", {
                     text = "Approved by " + formattedName;
                     style = "background-color:#d1fae5; color:#065f46;";
                 } else {
-                    text = "Pending";
-                    style = "background-color:#fef3c7; color:#92400e;";
+                    // Baris hasil import Excel SIMRS: label pending diganti Data Migrasi
+                    text = row.is_migrasi ? "Data Migrasi" : "Pending";
+                    style = row.is_migrasi ? "background-color:#e2e8f0; color:#334155;"
+                                           : "background-color:#fef3c7; color:#92400e;";
                 }
                 return `<span class="px-2.5 py-0.5 text-xs font-semibold rounded-full" style="${style}">${text}</span>`;
             },

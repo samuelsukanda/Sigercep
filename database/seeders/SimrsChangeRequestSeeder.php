@@ -76,7 +76,7 @@ class SimrsChangeRequestSeeder extends Seeder
                 $catatan = null;
             }
 
-            ChangeRequest::create([
+            $cr = ChangeRequest::create([
                 'user_id'           => $user?->id,
                 'nama'              => $namaSimpan,
                 'jabatan'           => $user->jabatan ?? '-',
@@ -90,6 +90,11 @@ class SimrsChangeRequestSeeder extends Seeder
                 'created_at'        => $createdAt,
                 'updated_at'        => $createdAt,
             ]);
+
+            // sumber_data tidak ada di $fillable supaya tidak bisa diisi dari form;
+            // import Excel tetap dicap agar UI menandai status pending sebagai Data Migrasi.
+            $cr->sumber_data = 'Migrasi SIMRS';
+            $cr->save();
             $created++;
         }
 

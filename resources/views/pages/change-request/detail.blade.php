@@ -113,6 +113,7 @@
                                         return match ($s) {
                                             'Disetujui' => 'background-color:#d1fae5; color:#065f46;',
                                             'Ditolak' => 'background-color:#fee2e2; color:#991b1b;',
+                                            'Data Migrasi' => 'background-color:#e2e8f0; color:#334155;',
                                             default => 'background-color:#fef3c7; color:#92400e;',
                                         };
                                     };
@@ -126,6 +127,10 @@
                                     @foreach ($stages as $field => $label)
                                         @php
                                             $status = $changeRequest->{$field . '_status'} ?? 'Menunggu';
+                                            // Data hasil import Excel SIMRS tidak menunggu persetujuan
+                                            if ($status === 'Menunggu' && $changeRequest->isMigrasi()) {
+                                                $status = 'Data Migrasi';
+                                            }
                                         @endphp
                                         <div class="rounded-lg border border-gray-100 p-3" style="flex:1 1 300px;">
                                             <div class="flex items-center justify-between">

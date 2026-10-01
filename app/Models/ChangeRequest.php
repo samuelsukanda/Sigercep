@@ -38,4 +38,10 @@ class ChangeRequest extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /* Baris hasil import Excel SIMRS (dicap oleh SimrsChangeRequestSeeder). */
+    public function isMigrasi(): bool
+    {
+        return $this->sumber_data === 'Migrasi SIMRS';
+    }
 }
