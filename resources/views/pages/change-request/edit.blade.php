@@ -35,7 +35,7 @@
                                         disabled>
                                 </div>
 
-                                @if($isIT ?? false)
+                                @if ($isIT ?? false)
                                     {{-- Tanggal Permintaan --}}
                                     <div>
                                         <label class="block text-sm font-semibold mb-1 text-slate-700">Tanggal
@@ -84,17 +84,16 @@
                                         @endphp
                                         @if ($isSimrsTiket)
                                             <div class="flex w-full">
-                                                <span class="inline-flex items-center px-3 text-sm font-semibold text-slate-500 bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg select-none">#</span>
+                                                <span
+                                                    class="inline-flex items-center px-3 text-sm font-semibold text-slate-500 bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg select-none">#</span>
                                                 <input type="text" name="no_tiket"
                                                     class="w-full px-3 py-2 border border-gray-300 rounded-r-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('no_tiket') border-red-500 @enderror"
-                                                    value="{{ $noTiketRaw }}"
-                                                    placeholder="Nomor tiket (opsional)">
+                                                    value="{{ $noTiketRaw }}" placeholder="Nomor tiket (opsional)">
                                             </div>
                                         @else
                                             <input type="text" name="no_tiket"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('no_tiket') border-red-500 @enderror"
-                                                value="{{ $noTiketRaw }}"
-                                                placeholder="Nomor tiket (opsional)">
+                                                value="{{ $noTiketRaw }}" placeholder="Nomor tiket (opsional)">
                                         @endif
                                         @error('no_tiket')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -113,15 +112,13 @@
                                         @enderror
                                     </div>
 
-                                    {{-- Urutan Pengerjaan (otomatis, read-only) --}}
+                                    {{-- Urutan Pengerjaan --}}
                                     <div>
                                         <label class="block text-sm font-semibold mb-1 text-slate-700">Urutan
                                             Pengerjaan</label>
                                         <input type="text" name="urutan_pengerjaan_tampil" readonly
                                             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-200 text-slate-700"
                                             value="{{ $urutanPengerjaan ?? '-' }}">
-                                        <p class="text-xs text-gray-400 mt-1">Otomatis dari tanggal permintaan tertua,
-                                            muncul saat status Pending / In Progress / QC.</p>
                                     </div>
 
                                     {{-- Catatan --}}
@@ -137,15 +134,13 @@
                                 @endif
 
                                 {{-- Permintaan Fitur --}}
-                                @if($isIT ?? false)
+                                @if ($isIT ?? false)
                                     <div class="select-disabled-gray">
-                                        <x-form.select name="permintaan_fitur" label="Permintaan Fitur"
-                                            :options="config('units.permintaan_fitur')"
+                                        <x-form.select name="permintaan_fitur" label="Permintaan Fitur" :options="config('units.permintaan_fitur')"
                                             :selected="old('permintaan_fitur', $changeRequest->permintaan_fitur)" disabled />
                                     </div>
                                 @else
-                                    <x-form.select name="permintaan_fitur" label="Permintaan Fitur"
-                                        :options="config('units.permintaan_fitur')"
+                                    <x-form.select name="permintaan_fitur" label="Permintaan Fitur" :options="config('units.permintaan_fitur')"
                                         :selected="old('permintaan_fitur', $changeRequest->permintaan_fitur)" required />
                                 @endif
 
@@ -155,8 +150,8 @@
                                         Deskripsi
                                     </label>
                                     <textarea name="deskripsi" rows="5"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('deskripsi') border-red-500 @enderror {{ ($isIT ?? false) ? 'bg-gray-200 text-slate-700' : '' }}"
-                                        {{ ($isIT ?? false) ? 'disabled' : 'required' }}>{{ old('deskripsi', $changeRequest->deskripsi) }}</textarea>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('deskripsi') border-red-500 @enderror {{ $isIT ?? false ? 'bg-gray-200 text-slate-700' : '' }}"
+                                        {{ $isIT ?? false ? 'disabled' : 'required' }}>{{ old('deskripsi', $changeRequest->deskripsi) }}</textarea>
                                     @error('deskripsi')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
@@ -164,8 +159,9 @@
 
                                 {{-- Upload File Pendukung --}}
                                 <div class="md:col-span-2">
-                                    @if($isIT ?? false)
-                                        <label class="block text-sm font-semibold mb-1 text-slate-700">Upload File Pendukung</label>
+                                    @if ($isIT ?? false)
+                                        <label class="block text-sm font-semibold mb-1 text-slate-700">Upload File
+                                            Pendukung</label>
                                         @if ($changeRequest->file_path)
                                             <a href="{{ route('change-request.show-file', $changeRequest->id) }}"
                                                 target="_blank"
