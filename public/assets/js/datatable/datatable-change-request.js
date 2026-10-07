@@ -17,15 +17,11 @@ SigTable("#changeRequestTable", {
         {
             // No / Nomor Urut (Auto Increment)
             data: null,
-            sortable: false,
-            orderable: false,
+            // Bisa diklik: klik pertama terbaru ke terlama, klik kedua terlama ke terbaru
+            orderSequence: ["desc", "asc"],
             searchable: false,
             render: function (data, type, row, meta) {
-                // dari atas / dari bawah (mis. halaman 2 dari 17 -> "11 / 7")
-                // Spasi ditulis langsung: utility mx-0.5 tidak ikut ter-compile.
-                const dariAtas = meta.row + 1 + meta.settings._iDisplayStart;
-                const dariBawah = meta.settings._iRecordsDisplay - dariAtas + 1;
-                return `<span class="font-semibold text-slate-700">${dariAtas}</span> / <span class="text-xs text-slate-400">${dariBawah}</span>`;
+                return `<span class="font-semibold text-slate-700">${meta.row + 1 + meta.settings._iDisplayStart}</span>`;
             },
         },
         {
@@ -190,6 +186,6 @@ SigTable("#changeRequestTable", {
     ],
 
 
-    // Default: kolom Urutan (index 7) naik, supaya nomor tampil 1, 2, 3...
-    order: [[7, "asc"]],
+    // Default: kolom No (index 0) terbaru ke terlama
+    order: [[0, "desc"]],
 });

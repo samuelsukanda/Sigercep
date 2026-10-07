@@ -237,22 +237,23 @@ class ChangeRequestController extends Controller
             $recordsFiltered = $query->count();
 
             /*
-             * Default: permintaan SIMRS yang masih aktif (ada nomor urutan pengerjaan)
-             * tampil lebih dulu dengan nomor 1, 2, 3..., lalu baris tanpa nomor.
-             * Nomor urutan dihitung dari tanggal permintaan terlama, jadi urutannya
-             * harus sama dengan urutan created_at di dalam masing-masing kelompok.
-             * Kolom "Urutan" = index 7 (lihat urutan columns di
-             * public/assets/js/datatable/datatable-change-request.js).
+             * Sort DataTables. Index kolom mengikuti urutan columns di
+             * public/assets/js/datatable/datatable-change-request.js:
+             * 0 = No (waktu, terbaru ke terlama), 7 = Urutan Pengerjaan
+             * (nomor antrean lebih dulu, lalu baris tanpa nomor).
+             * Kolom lain belum punya sort server-side -> tetap created_at desc.
              */
-            $urutanCol = (int) ($request->order[0]['column'] ?? -1);
-            $urutanDir = strtolower((string) ($request->order[0]['dir'] ?? 'asc')) === 'desc' ? 'desc' : 'asc';
+            $sortCol = (int) ($request->order[0]['column'] ?? -1);
+            $sortDir = strtolower((string) ($request->order[0]['dir'] ?? 'asc')) === 'desc' ? 'desc' : 'asc';
 
-            if ($urutanCol === 7) {
+            if ($sortCol === 0) {
+                $query->orderBy('created_at', $sortDir)->orderBy('id', $sortDir);
+            } elseif ($sortCol === 7) {
                 $query->orderByRaw(
                     "CASE WHEN permintaan_fitur = 'SIMRS' AND status_pengerjaan IN ('Pending', 'In Progress', 'QC') THEN 0 ELSE 1 END"
                 )
-                    ->orderBy('created_at', $urutanDir)
-                    ->orderBy('id', $urutanDir);
+                    ->orderBy('created_at', $sortDir)
+                    ->orderBy('id', $sortDir);
             } else {
                 $query->orderBy('created_at', 'desc');
             }
