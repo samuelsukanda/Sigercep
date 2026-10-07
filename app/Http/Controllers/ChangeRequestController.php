@@ -237,19 +237,13 @@ class ChangeRequestController extends Controller
             $recordsFiltered = $query->count();
 
             /*
-             * Urutan pengerjaan dihitung dari baris yang lolos filter yang sedang
-             * aktif, jadi nomornya selalu 1..N tanpa lubang (baris yang tersembunyi
-             * oleh filter tidak meninggalkan nomor kosong). Urutannya tetap
-             * created_at terlama ke terbaru; hanya penomoran yang menyesuaikan filter.
+             * Urutan pengerjaan: Pending / In Progress / QC, dari created_at terlama
+             * ke terbaru. Dihitung dari seluruh antrean (bukan dari hasil filter)
+             * supaya nomornya stabil: tidak berubah saat filter, periode, atau
+             * pencarian berubah. Baris tanpa nomor tidak meninggalkan celah kosong
+             * di antrean; selisih pada tampilan hanya baris yang disembunyikan filter.
              */
-            $urutanPengerjaan = [];
-            foreach ((clone $query)
-                ->where('permintaan_fitur', 'SIMRS')
-                ->whereIn('status_pengerjaan', ['Pending', 'In Progress', 'QC'])
-                ->orderBy('created_at')->orderBy('id')
-                ->pluck('id') as $i => $id) {
-                $urutanPengerjaan[$id] = $i + 1;
-            }
+            $urutanPengerjaan = ChangeRequest::urutanPengerjaanMap();
 
             /*
              * Sort DataTables. Index kolom mengikuti urutan columns di
