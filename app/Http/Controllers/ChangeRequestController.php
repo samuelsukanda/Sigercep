@@ -237,6 +237,21 @@ class ChangeRequestController extends Controller
             $recordsFiltered = $query->count();
 
             /*
+             * Urutan pengerjaan dihitung dari baris yang lolos filter yang sedang
+             * aktif, jadi nomornya selalu 1..N tanpa lubang (baris yang tersembunyi
+             * oleh filter tidak meninggalkan nomor kosong). Urutannya tetap
+             * created_at terlama ke terbaru; hanya penomoran yang menyesuaikan filter.
+             */
+            $urutanPengerjaan = [];
+            foreach ((clone $query)
+                ->where('permintaan_fitur', 'SIMRS')
+                ->whereIn('status_pengerjaan', ['Pending', 'In Progress', 'QC'])
+                ->orderBy('created_at')->orderBy('id')
+                ->pluck('id') as $i => $id) {
+                $urutanPengerjaan[$id] = $i + 1;
+            }
+
+            /*
              * Sort DataTables. Index kolom mengikuti urutan columns di
              * public/assets/js/datatable/datatable-change-request.js:
              * 0 = No (waktu), 7 = Urutan Pengerjaan (antrean), 9 = Aksi (bisa diclick).
@@ -279,8 +294,6 @@ class ChangeRequestController extends Controller
             $canUpdate = PermissionHelper::canAccess('change_request', 'update');
             $canRead   = PermissionHelper::canAccess('change_request', 'read');
             $canDelete = PermissionHelper::canAccess('change_request', 'delete');
-
-            $urutanPengerjaan = ChangeRequest::urutanPengerjaanMap();
 
             $data = [];
             foreach ($records as $item) {
