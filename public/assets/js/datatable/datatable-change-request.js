@@ -21,7 +21,11 @@ SigTable("#changeRequestTable", {
             orderable: false,
             searchable: false,
             render: function (data, type, row, meta) {
-                return `<span class="font-semibold text-slate-700">${meta.row + 1 + meta.settings._iDisplayStart}</span>`;
+                // dari atas / dari bawah (mis. halaman 2 dari 17 -> "11 / 7")
+                // Spasi ditulis langsung: utility mx-0.5 tidak ikut ter-compile.
+                const dariAtas = meta.row + 1 + meta.settings._iDisplayStart;
+                const dariBawah = meta.settings._iRecordsDisplay - dariAtas + 1;
+                return `<span class="font-semibold text-slate-700">${dariAtas}</span> / <span class="text-xs text-slate-400">${dariBawah}</span>`;
             },
         },
         {
@@ -88,7 +92,6 @@ SigTable("#changeRequestTable", {
         {
             // Urutan Pengerjaan (otomatis, khusus SIMRS yang masih aktif)
             data: "urutan_pengerjaan",
-            orderable: false,
             searchable: false,
             render: function (data) {
                 if (data === null || data === undefined || data === "") {
@@ -187,5 +190,6 @@ SigTable("#changeRequestTable", {
     ],
 
 
-    order: [[1, "desc"]],
+    // Default: kolom Urutan (index 7) naik, supaya nomor tampil 1, 2, 3...
+    order: [[7, "asc"]],
 });

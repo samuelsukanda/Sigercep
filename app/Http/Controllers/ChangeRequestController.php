@@ -236,7 +236,26 @@ class ChangeRequestController extends Controller
             $recordsTotal = $totalQuery->count();
             $recordsFiltered = $query->count();
 
-            $query->orderBy('created_at', 'desc');
+            /*
+             * Default: permintaan SIMRS yang masih aktif (ada nomor urutan pengerjaan)
+             * tampil lebih dulu dengan nomor 1, 2, 3..., lalu baris tanpa nomor.
+             * Nomor urutan dihitung dari tanggal permintaan terlama, jadi urutannya
+             * harus sama dengan urutan created_at di dalam masing-masing kelompok.
+             * Kolom "Urutan" = index 7 (lihat urutan columns di
+             * public/assets/js/datatable/datatable-change-request.js).
+             */
+            $urutanCol = (int) ($request->order[0]['column'] ?? -1);
+            $urutanDir = strtolower((string) ($request->order[0]['dir'] ?? 'asc')) === 'desc' ? 'desc' : 'asc';
+
+            if ($urutanCol === 7) {
+                $query->orderByRaw(
+                    "CASE WHEN permintaan_fitur = 'SIMRS' AND status_pengerjaan IN ('Pending', 'In Progress', 'QC') THEN 0 ELSE 1 END"
+                )
+                    ->orderBy('created_at', $urutanDir)
+                    ->orderBy('id', $urutanDir);
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
 
             $start = $request->start ?? 0;
             $length = $request->length ?? 10;
