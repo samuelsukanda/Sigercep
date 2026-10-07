@@ -316,9 +316,9 @@ class ChangeRequestController extends Controller
                         <span class="text-xs text-gray-400">' . Carbon::parse($item->created_at)->format('H:i') . ' WIB</span>
                     </div>
                 ',
-                    'can_update'            => $isIT || ($isOwner && !$wasApprover && $item->approval_1_status !== 'Disetujui'),
+                    'can_update'            => $isIT || ($isOwner && !$wasApprover && !$item->isMigrasi() && $item->approval_1_status !== 'Disetujui'),
                     'can_read'              => true,
-                    'can_delete'            => $isIT || ($isOwner && !$wasApprover && $item->approval_1_status !== 'Disetujui'),
+                    'can_delete'            => $isIT || ($isOwner && !$wasApprover && !$item->isMigrasi() && $item->approval_1_status !== 'Disetujui'),
                 ];
             }
 
@@ -597,7 +597,11 @@ class ChangeRequestController extends Controller
         $changeRequest = ChangeRequest::findOrFail($id);
         $user = Auth::user();
         $isIT = $this->isIT();
-        $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && $changeRequest->approval_1_status !== 'Disetujui';
+        $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && !$changeRequest->isMigrasi() && $changeRequest->approval_1_status !== 'Disetujui';
+
+        if (!$isIT && $changeRequest->isMigrasi()) {
+            abort(403, 'Data hasil Migrasi SIMRS tidak dapat diedit atau dihapus.');
+        }
 
         if (!$isIT && !$isOwner) {
             abort(403, 'Anda hanya dapat mengedit Change Request milik sendiri.');
@@ -613,7 +617,11 @@ class ChangeRequestController extends Controller
         $changeRequest = ChangeRequest::findOrFail($id);
         $user = Auth::user();
         $isIT = $this->isIT();
-        $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && $changeRequest->approval_1_status !== 'Disetujui';
+        $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && !$changeRequest->isMigrasi() && $changeRequest->approval_1_status !== 'Disetujui';
+
+        if (!$isIT && $changeRequest->isMigrasi()) {
+            abort(403, 'Data hasil Migrasi SIMRS tidak dapat diedit atau dihapus.');
+        }
 
         if (!$isIT && !$isOwner) {
             abort(403, 'Anda hanya dapat mengedit Change Request milik sendiri.');
@@ -700,7 +708,11 @@ class ChangeRequestController extends Controller
         $changeRequest = ChangeRequest::findOrFail($id);
         $user = Auth::user();
         $isIT = $this->isIT();
-        $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && $changeRequest->approval_1_status !== 'Disetujui';
+        $isOwner = $changeRequest->user_id === $user->id && PermissionHelper::canManageChangeRequest() && !$changeRequest->isMigrasi() && $changeRequest->approval_1_status !== 'Disetujui';
+
+        if (!$isIT && $changeRequest->isMigrasi()) {
+            abort(403, 'Data hasil Migrasi SIMRS tidak dapat diedit atau dihapus.');
+        }
 
         if (!$isIT && !$isOwner) {
             abort(403, 'Anda hanya dapat menghapus Change Request milik sendiri.');
