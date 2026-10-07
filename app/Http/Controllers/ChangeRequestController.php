@@ -239,12 +239,21 @@ class ChangeRequestController extends Controller
             /*
              * Sort DataTables. Index kolom mengikuti urutan columns di
              * public/assets/js/datatable/datatable-change-request.js:
-             * 0 = No (waktu, terbaru ke terlama), 7 = Urutan Pengerjaan
-             * (nomor antrean lebih dulu, lalu baris tanpa nomor).
-             * Kolom lain belum punya sort server-side -> tetap created_at desc.
+             * 0 = No (waktu), 7 = Urutan Pengerjaan (antrean), 9 = Aksi (bisa diclick).
+             * Kolom biasa diurutkan sesuai kolomnya di database; kolom yang
+             * menampilkan badge diurutkan dari nilai statusnya di database.
              */
             $sortCol = (int) ($request->order[0]['column'] ?? -1);
             $sortDir = strtolower((string) ($request->order[0]['dir'] ?? 'asc')) === 'desc' ? 'desc' : 'asc';
+
+            $sortColumns = [
+                1 => 'no_tiket',
+                2 => 'nama',
+                3 => 'created_at',
+                4 => 'permintaan_fitur',
+                5 => 'deskripsi',
+                6 => 'status_pengerjaan',
+            ];
 
             if ($sortCol === 0) {
                 $query->orderBy('created_at', $sortDir)->orderBy('id', $sortDir);
@@ -254,6 +263,11 @@ class ChangeRequestController extends Controller
                 )
                     ->orderBy('created_at', $sortDir)
                     ->orderBy('id', $sortDir);
+            } elseif ($sortCol === 8) {
+                $query->orderBy('approval_1_status', $sortDir)
+                    ->orderBy('approval_2_status', $sortDir);
+            } elseif (isset($sortColumns[$sortCol])) {
+                $query->orderBy($sortColumns[$sortCol], $sortDir);
             } else {
                 $query->orderBy('created_at', 'desc');
             }
