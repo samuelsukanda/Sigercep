@@ -1,5 +1,6 @@
 <div class="relative overflow-x-auto shadow-md rounded-lg px-2 bg-white dark:text-white">
-    <table id="changeRequestTable" class="datatable-custom min-w-full divide-y divide-gray-200 dark:divide-white-200 dark:text-white">
+    <table id="changeRequestTable"
+        class="datatable-custom min-w-full divide-y divide-gray-200 dark:divide-white-200 dark:text-white">
         <thead class="text-xs text-slate-500 uppercase bg-white dark:text-white">
             <tr>
                 <th class="px-6 py-3">No</th>
@@ -9,7 +10,7 @@
                 <th class="px-6 py-3">Permintaan Fitur</th>
                 <th class="px-6 py-3">Deskripsi</th>
                 <th class="px-6 py-3 text-center">Status Pengerjaan IT</th>
-                <th class="px-6 py-3 text-center">Urutan Pengerjaan</th>
+                <th class="px-6 py-3 text-center">Urutan Pengerjaan IT</th>
                 <th class="px-6 py-3 text-center">Status Approval</th>
                 <th class="px-6 py-3 text-center">Aksi</th>
             </tr>
