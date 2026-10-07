@@ -44,4 +44,26 @@ class ChangeRequest extends Model
     {
         return $this->sumber_data === 'Migrasi SIMRS';
     }
+
+    /*
+     * Urutan pengerjaan otomatis: peta id => nomor untuk permintaan SIMRS yang
+     * masih aktif. Nomor = posisi menurut tanggal permintaan terlama dulu.
+     * Row yang tidak ada di peta (status Open/Done/Closed atau non-SIMRS)
+     * tidak punya nomor. Mapping ini dihitung dari status terkini, jadi nomor
+     * ikut maju otomatis begitu baris di depannya selesai.
+     */
+    public static function urutanPengerjaanMap(): array
+    {
+        $ids = static::where('permintaan_fitur', 'SIMRS')
+            ->whereIn('status_pengerjaan', ['Pending', 'In Progress', 'QC'])
+            ->orderBy('created_at')->orderBy('id')
+            ->pluck('id')->all();
+
+        $map = [];
+        foreach ($ids as $i => $id) {
+            $map[$id] = $i + 1;
+        }
+
+        return $map;
+    }
 }

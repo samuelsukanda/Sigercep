@@ -9,6 +9,7 @@
                 <th class="px-6 py-3">Permintaan Fitur</th>
                 <th class="px-6 py-3">Deskripsi</th>
                 <th class="px-6 py-3 text-center">Status Pengerjaan IT</th>
+                <th class="px-6 py-3 text-center">Urutan</th>
                 <th class="px-6 py-3 text-center">Status Approval</th>
                 <th class="px-6 py-3 text-center">Aksi</th>
             </tr>

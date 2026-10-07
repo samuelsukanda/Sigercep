@@ -246,6 +246,8 @@ class ChangeRequestController extends Controller
             $canRead   = PermissionHelper::canAccess('change_request', 'read');
             $canDelete = PermissionHelper::canAccess('change_request', 'delete');
 
+            $urutanPengerjaan = ChangeRequest::urutanPengerjaanMap();
+
             $data = [];
             foreach ($records as $item) {
                 $isOwner = $item->user_id === $user->id;
@@ -258,6 +260,7 @@ class ChangeRequestController extends Controller
                     'permintaan_fitur'      => $item->permintaan_fitur ?? '-',
                     'deskripsi'             => Str::limit((string) ($item->deskripsi ?? '-'), 50),
                     'status_pengerjaan'     => $item->status_pengerjaan ?? 'Open',
+                    'urutan_pengerjaan'     => $urutanPengerjaan[$item->id] ?? null,
                     'no_tiket'              => $item->no_tiket ?? 'No Tiket',
                     'approval_1_status'     => $item->approval_1_status ?? 'Menunggu',
                     'approval_1_by'         => $item->approval_1_by ?? null,
@@ -426,7 +429,9 @@ class ChangeRequestController extends Controller
             }
         }
 
-        return view('pages.change-request.detail', compact('changeRequest', 'approvableLevel'));
+        $urutanPengerjaan = ChangeRequest::urutanPengerjaanMap()[$changeRequest->id] ?? null;
+
+        return view('pages.change-request.detail', compact('changeRequest', 'approvableLevel', 'urutanPengerjaan'));
     }
 
     public function showFile($id)
@@ -557,7 +562,9 @@ class ChangeRequestController extends Controller
             abort(403, 'Anda hanya dapat mengedit Change Request milik sendiri.');
         }
 
-        return view('pages.change-request.edit', compact('changeRequest', 'isIT'));
+        $urutanPengerjaan = ChangeRequest::urutanPengerjaanMap()[$changeRequest->id] ?? null;
+
+        return view('pages.change-request.edit', compact('changeRequest', 'isIT', 'urutanPengerjaan'));
     }
 
     public function update(Request $request, string $id)

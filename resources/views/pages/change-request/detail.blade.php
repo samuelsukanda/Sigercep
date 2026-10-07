@@ -76,6 +76,17 @@
                                 <p class="text-slate-600">{{ $changeRequest->mandays ?? '-' }}</p>
                             </div>
 
+                            {{-- Urutan Pengerjaan --}}
+                            <div class="w-full md:w-1/2 xl:w-1/3 px-3">
+                                <label class="block mb-1 text-sm font-semibold text-slate-700">Urutan Pengerjaan</label>
+                                @if (!empty($urutanPengerjaan))
+                                    <span class="px-2.5 py-0.5 text-xs font-bold rounded-full"
+                                        style="background-color:#e0f2fe; color:#075985;">{{ $urutanPengerjaan }}</span>
+                                @else
+                                    <p class="text-slate-600">-</p>
+                                @endif
+                            </div>
+
                             {{-- Catatan --}}
                             <div class="w-full md:w-1/2 xl:w-1/3 px-3">
                                 <label class="block mb-1 text-sm font-semibold text-slate-700">Catatan</label>

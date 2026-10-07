@@ -113,6 +113,17 @@
                                         @enderror
                                     </div>
 
+                                    {{-- Urutan Pengerjaan (otomatis, read-only) --}}
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-1 text-slate-700">Urutan
+                                            Pengerjaan</label>
+                                        <input type="text" name="urutan_pengerjaan_tampil" readonly
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-200 text-slate-700"
+                                            value="{{ $urutanPengerjaan ?? '-' }}">
+                                        <p class="text-xs text-gray-400 mt-1">Otomatis dari tanggal permintaan tertua,
+                                            muncul saat status Pending / In Progress / QC.</p>
+                                    </div>
+
                                     {{-- Catatan --}}
                                     <div>
                                         <label class="block text-sm font-semibold mb-1 text-slate-700">Catatan</label>

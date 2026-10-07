@@ -86,6 +86,18 @@ SigTable("#changeRequestTable", {
             },
         },
         {
+            // Urutan Pengerjaan (otomatis, khusus SIMRS yang masih aktif)
+            data: "urutan_pengerjaan",
+            orderable: false,
+            searchable: false,
+            render: function (data) {
+                if (data === null || data === undefined || data === "") {
+                    return `<span class="text-slate-300">-</span>`;
+                }
+                return `<span class="px-2.5 py-0.5 text-xs font-bold rounded-full" style="background-color:#e0f2fe; color:#075985;">${data}</span>`;
+            },
+        },
+        {
             // Status Approval
             data: "approval_1_status",
             render: function (data, type, row) {
